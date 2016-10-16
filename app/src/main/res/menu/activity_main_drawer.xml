@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/learning"
+            android:icon="@drawable/ic_school_black_24dp"
+            android:title="@string/learning_activity_name" />
+        <item
+            android:id="@+id/training"
+            android:icon="@drawable/ic_keyboard_voice_black_24dp"
+            android:title="@string/trainer_activity_name" />
+        <item
+            android:id="@+id/master_kit"
+            android:icon="@drawable/ic_ondemand_video_black_24dp"
+            android:title="@string/master_activity_name" />
+        <item
+            android:id="@+id/goals"
+            android:icon="@drawable/ic_gps_fixed_black_24dp"
+            android:title="@string/goals_activity_name" />
+    </group>
+
+    <item android:title="TODO">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>

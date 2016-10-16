@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Master Kit</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Авторизация</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Ваш Email</string>
+    <string name="prompt_password">Ваш Пароль</string>
+    <string name="action_sign_in">Авторизация</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">Неправильный адрес</string>
+    <string name="error_invalid_password">Пароль слишком короткий</string>
+    <string name="error_incorrect_password">Неправельный пароль</string>
+    <string name="error_field_required">Поле обязательно</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="super_ego">Super ego</string>
+    <string name="forgot_link">Забыли пароль?</string>
+    <string name="master_kit">Master kit</string>
+    <string name="learning_activity_name">Обучение</string>
+    <string name="trainer_activity_name">Тренажёр</string>
+    <string name="master_activity_name">Master Kit Live</string>
+    <string name="goals_activity_name">Мои цели</string>
+</resources>
