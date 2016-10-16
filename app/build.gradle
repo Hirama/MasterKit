@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "24.0.2"
-    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "super_ego.info.masterkit"
         minSdkVersion 21
@@ -32,6 +31,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'commons-validator:commons-validator:1.4.1'
     compile 'com.android.volley:volley:1.0.0'
-    compile 'org.apache.httpcomponents:httpclient:4.5.2'
     testCompile 'junit:junit:4.12'
 }
