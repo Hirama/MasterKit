@@ -69,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    /*
+    Init from Bob
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
