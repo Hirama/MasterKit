@@ -28,4 +28,7 @@
     <string name="goals_activity_name">Мои цели</string>
     <string name="continue_learning_menu_item">Продолжить обучение</string>
     <string name="awareness_title_with_percent">Осознанность 60%</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
