@@ -7,4 +7,5 @@
     <color name="forgot_button">#0080bf00</color>
     <color name="color_navigation_list_background">#614264</color>
     <color name="color_selector_navigation_item1">#4E3552</color>
+    <color name="contiune_button_color">#614264</color>
 </resources>

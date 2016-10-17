@@ -19,7 +19,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,8 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +42,7 @@ import java.util.List;
 
 import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.model.TokenPOJO;
 import super_ego.info.masterkit.util.RestUrl;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -325,7 +324,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, TokenPOJO> {
 
         private final String mEmail;
         private final String mPassword;
@@ -336,7 +335,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected TokenPOJO doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             final String baseurl = RestUrl.BASE_URL + "v1/user/login";
             HttpURLConnection connection;
@@ -364,46 +363,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
                 // Response from server after login process will be stored in response variable.
                 response = sb.toString();
-                SharedPreferences mPrefs = getSharedPreferences("", MODE_PRIVATE);
-                SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                prefsEditor.putString("user", response);
-                prefsEditor.apply();
+
 
                 // You can perform UI operations here
                 isr.close();
                 reader.close();
+                Gson gson = new Gson();
+                return gson.fromJson(response, TokenPOJO.class);
             } catch (IOException e) {
-                return false;
+                return null;
 
                 // Error
             }
-            // System.out.println(response);
-            JSONObject jObj = null;
-            // Try to parse the string to a JSON Object
-            try {
-                jObj = new JSONObject(response);
-            } catch (JSONException e) {
-                Log.e("JSON Parser", "Error parsing data " + e.toString());
-            }
-            // Return the JSONObject
-            return true;
+
 
         }
 
         @Override
-        protected void onPostExecute(final Boolean user) {
+        protected void onPostExecute(final TokenPOJO token) {
             mAuthTask = null;
             showProgress(false);
 
 
-            //System.out.println(user.getToken());
-            //Log.d("Go",user.getToken());
-            if (user == false) {
+
+            if (token == null) {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
-            } else if (user) {
-                Intent iinent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(iinent);
+            } else if (token!=null) {
+                SharedPreferences mPrefs = getSharedPreferences("", MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                prefsEditor.putString("user", token.getToken());
+                prefsEditor.apply();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("token", token.getToken());
+                startActivity(intent);
                 LoginActivity.this.finish();
             }
         }
