@@ -24,7 +24,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:actionLayout="@layout/action_view_status"
         android:background="@color/color_navigation_list_background"
         app:menu="@menu/activity_main_drawer"
         />
