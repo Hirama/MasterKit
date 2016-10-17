@@ -1,14 +1,11 @@
 package super_ego.info.masterkit;
 
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -50,15 +47,9 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        LearningFragment learningFragment = new LearningFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.frgmCont, learningFragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,41 +61,40 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Bundle extras = getIntent().getExtras();
-        String value="";
+        String value = "";
 
         SharedPreferences mPrefs = getSharedPreferences("", MODE_PRIVATE);
         if (mPrefs.contains("user")) {
-            value = (mPrefs.getString("user",""));
-           //Log.d("******",value);
+            value = (mPrefs.getString("user", ""));
+            //Log.d("******",value);
             userDataTask = new UserGetData(value);
         }
 
-            if (extras != null) {
-                value = extras.getString("token");
-                //The key argument here must match that used in the other activity
-                userDataTask = new UserGetData(value);
+        if (extras != null) {
+            value = extras.getString("token");
+            //The key argument here must match that used in the other activity
+            userDataTask = new UserGetData(value);
 
-            }
-     //   }
+        }
+        //   }
 
 
     }
 
     private void setUserName() {
         try {
-            newUser=userDataTask.execute((Void) null).get();
+            newUser = userDataTask.execute((Void) null).get();
             TextView fnameANDlname = (TextView) findViewById(R.id.user_name);
-            fnameANDlname.setText(newUser.getFirst_name()+" "+newUser.getLast_name());
+            fnameANDlname.setText(newUser.getFirst_name() + " " + newUser.getLast_name());
             TextView level = (TextView) findViewById(R.id.user_level_text);
             level.setText(newUser.getLevel().toString());
             TextView learningLevel = (TextView) findViewById(R.id.learning_level_text);
-            learningLevel.setText(newUser.getStep()+"/"+newUser.getSteps_count());
+            learningLevel.setText(newUser.getStep() + "/" + newUser.getSteps_count());
             ProgressBar learningProgressBar = (ProgressBar) findViewById(R.id.progressBar);
             NumberFormat format = NumberFormat.getCurrencyInstance();
             Number number = format.parse(newUser.getConsciousness());
             learningProgressBar.setProgress(number.intValue());
-            Log.d("*******",newUser.getImage());
-
+            Log.d("*******", newUser.getImage());
 
 
         } catch (InterruptedException e) {
@@ -193,6 +183,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.learning) {
+            LearningFragment learningFragment = new LearningFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.frgmCont, learningFragment).commit();
+
 
         } else if (id == R.id.training) {
 
@@ -206,11 +200,11 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -222,16 +216,16 @@ public class MainActivity extends AppCompatActivity
 
 
         UserGetData(String token) {
-            value=token;
+            value = token;
         }
 
         @Override
         protected UserPOJO doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            final String baseurl = RestUrl.BASE_URL + "v1/user/get-user-data"+"?access-token="+value;
+            final String baseurl = RestUrl.BASE_URL + "v1/user/get-user-data" + "?access-token=" + value;
             HttpURLConnection httpURLConnection;
-            BufferedReader bufferedReader  = null;
+            BufferedReader bufferedReader = null;
             StringBuilder stringBuilder = null;
             String line = null;
             URL url = null;
@@ -264,10 +258,10 @@ public class MainActivity extends AppCompatActivity
 
 
         protected void onPostExecute(final UserPOJO token) {
-           if(token!=null){
+            if (token != null) {
 
-               super.onPostExecute(token);
-           }
+                super.onPostExecute(token);
+            }
 
         }
 
