@@ -1,19 +1,20 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    tools:context="super_ego.info.masterkit.fragments.FrgGoalsMoney">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:id ="@+id/coordinatorlayout"
+    android:layout_width="match_parent"
+    android:layout_height="500dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="520dp">
 
-
-        <Button
-            android:text="Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button7" />
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="56dp"
                 android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
@@ -43,18 +44,25 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_below="@+id/button7"
+            android:layout_alignParentStart="true">
 
         </android.support.v4.view.ViewPager>
 
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <Button
-            android:text="ДОБАВИТЬ ЦЕЛЬ"
+            android:text="Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button8"
+            android:id="@+id/btnAddGoal"
             android:background="@color/colorPrimary"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true" />
-
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

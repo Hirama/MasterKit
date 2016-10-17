@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +20,26 @@ import java.util.List;
 import super_ego.info.masterkit.fragments.FrgGoalsHelth;
 import super_ego.info.masterkit.fragments.FrgGoalsLove;
 import super_ego.info.masterkit.fragments.FrgGoalsMoney;
+import super_ego.info.masterkit.fragments.FrgGoalsParent;
 import super_ego.info.masterkit.fragments.FrgGoalsTarget;
+import super_ego.info.masterkit.fragments.GoalsFrgDialog;
 
 
 public class GoalsFragment extends Fragment {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    Button btnAddGoal;
+    FrgGoalsParent frgGoalsParent = new FrgGoalsParent();
+    ////////!!!!!!!!!!!!!1
+    FrgGoalsMoney frgGoalsMoney = new FrgGoalsMoney();
+////////////////////////!!!!!!!!!!!!1
     private int[] tabIcons = {
-            R.drawable.ic_menu_camera,
-            R.drawable.ic_menu_gallery,
-            R.drawable.ic_menu_send,
-            R.drawable.ic_menu_share
- };
+            R.drawable.goal_money,
+            R.drawable.goal_love,
+            R.drawable.goal_target,
+            R.drawable.goal_helth
+    };
 
     public GoalsFragment() {
     }
@@ -39,7 +47,6 @@ public class GoalsFragment extends Fragment {
     public static GoalsFragment newInstance(String param1, String param2) {
         GoalsFragment fragment = new GoalsFragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,6 +67,19 @@ public class GoalsFragment extends Fragment {
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+        btnAddGoal = (Button) v.findViewById(R.id.btnAddGoal);
+        View.OnClickListener oclBtn = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] found = new String[]{"1", "2", "3"};
+                new GoalsFrgDialog().show(getActivity().getSupportFragmentManager(),
+                        "login");
+                frgGoalsMoney.setListGoalsServer(found);
+              //   ((FrgGoalsParent) getActivity().getSupportFragmentManager().getFragment()).setListGoalsServer(found);
+
+            }
+        };
+        btnAddGoal.setOnClickListener(oclBtn);
 
         return v;
     }
@@ -75,8 +95,8 @@ public class GoalsFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         GoalsFragment.ViewPagerAdapter adapter = new GoalsFragment.ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
-        adapter.addFrag(new FrgGoalsLove(), "Money");
-        adapter.addFrag(new FrgGoalsMoney(), "Love");
+        adapter.addFrag(frgGoalsMoney, "Money ");
+        adapter.addFrag(new FrgGoalsLove(), "Love");
         adapter.addFrag(new FrgGoalsTarget(), "Target");
         adapter.addFrag(new FrgGoalsHelth(), "Helth");
         viewPager.setAdapter(adapter);
@@ -94,6 +114,7 @@ public class GoalsFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
+
             return mFragmentList.get(position);
         }
 
