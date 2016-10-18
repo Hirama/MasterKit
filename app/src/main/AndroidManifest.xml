@@ -28,8 +28,6 @@
             android:name=".MainActivity"
             android:label="@string/learning_activity_name" />
         <activity android:name=".LearnActivity" />
-        <activity android:name=".TrainerActivity"
-            android:label="@string/trainer_activity_name"/>
         <activity android:name=".MasterActivity"
             android:label="@string/master_activity_name"/>
         <activity android:name=".GoalsActivity"
