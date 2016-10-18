@@ -124,7 +124,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:text="Уровень"
@@ -134,7 +134,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <ProgressBar

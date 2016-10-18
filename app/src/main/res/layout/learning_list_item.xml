@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="?attr/listPreferredItemHeightLarge"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_weight="0.88"
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView_step"
                 android:textAllCaps="true"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:layout_marginTop="16dp" />
 
             <TextView

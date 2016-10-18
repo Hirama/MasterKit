@@ -40,7 +40,8 @@ public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         MaterialsPOJO record = records.get(i);
         viewHolder.textView_desciption_step.setText(record.getTitle());
-        viewHolder.textView_step.setText("ШАГ " + String.valueOf(record.getStep()));
+        String stepNumber = "ШАГ " + record.getStep().toString();
+        viewHolder.textView_step.setText(stepNumber);
         if (Objects.equals(record.getStatus(), "locked")) {
             viewHolder.imageButton.setImageResource(R.drawable.ic_lock_outline_black_24dp);
         } else if (Objects.equals(record.getStatus(), "active")) {

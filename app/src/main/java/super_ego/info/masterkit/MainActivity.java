@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
             TextView fnameANDlname = (TextView) findViewById(R.id.user_name);
             fnameANDlname.setText(newUser.getFirst_name() + " " + newUser.getLast_name());
             TextView level = (TextView) findViewById(R.id.user_level_text);
-            level.setText(newUser.getLevel().toString());
+            level.setText(String.valueOf(newUser.getLevel()));
             TextView learningLevel = (TextView) findViewById(R.id.learning_level_text);
             learningLevel.setText(newUser.getStep() + "/" + newUser.getSteps_count());
             ProgressBar learningProgressBar = (ProgressBar) findViewById(R.id.progressBar);
