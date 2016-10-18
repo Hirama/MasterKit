@@ -121,7 +121,8 @@ public class UserPOJO {
     }
 
     public String getConsciousness() {
-        return consciousness;
+
+        return consciousness.replace("%","");
     }
 
     public void setConsciousness(String consciousness) {

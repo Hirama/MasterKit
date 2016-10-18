@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        SharedPreferences mPrefs = getSharedPreferences("", MODE_PRIVATE);
+        SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("user")) {
             Intent iinent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(iinent);
@@ -390,10 +390,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             } else if (token!=null) {
-                SharedPreferences mPrefs = getSharedPreferences("", MODE_PRIVATE);
+                SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
                 prefsEditor.putString("user", token.getToken());
-                prefsEditor.apply();
+                prefsEditor.commit();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("token", token.getToken());
                 startActivity(intent);
