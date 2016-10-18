@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -25,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -102,8 +104,20 @@ public class MainActivity extends AppCompatActivity
             ProgressBar learningProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
             learningProgressBar.setProgress(Integer.valueOf(newUser.getConsciousness()));
-            ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
-            DownloadImageTask downloadImageTask = new DownloadImageTask(setAvatar);
+//            ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
+            CircularImageView circularImageView = (CircularImageView)findViewById(R.id.user_photo);
+
+            // Set Border
+//            circularImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
+            circularImageView.setBorderWidth(1);
+// Add Shadow with default param
+            circularImageView.addShadow();
+// or with custom param
+            circularImageView.setShadowRadius(10);
+            circularImageView.setShadowColor(Color.TRANSPARENT);
+
+
+            DownloadImageTask downloadImageTask = new DownloadImageTask(circularImageView);
             downloadImageTask.execute();
 
         } catch (InterruptedException e) {
