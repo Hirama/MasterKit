@@ -3,6 +3,8 @@ package super_ego.info.masterkit;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,11 +28,10 @@ import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.login.LoginActivity;
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private UserGetData userDataTask = null;
     private UserPOJO newUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +66,26 @@ public class MainActivity extends AppCompatActivity
         Bundle extras = getIntent().getExtras();
         String value = "";
 
-        SharedPreferences mPrefs = getSharedPreferences("", MODE_PRIVATE);
+        SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("user")) {
-            value = (mPrefs.getString("user", ""));
+            value = mPrefs.getString("user", "");
             //Log.d("******",value);
             userDataTask = new UserGetData(value);
+            Bundle bundle = new Bundle();
+            bundle.putString("token", value);
+            learningFragment.setArguments(bundle);
         }
 
         if (extras != null) {
             value = extras.getString("token");
             //The key argument here must match that used in the other activity
             userDataTask = new UserGetData(value);
+            Bundle bundle = new Bundle();
+            bundle.putString("token", value);
+            learningFragment.setArguments(bundle);
 
         }
-        //   }
+
 
 
     }
@@ -91,17 +100,15 @@ public class MainActivity extends AppCompatActivity
             TextView learningLevel = (TextView) findViewById(R.id.learning_level_text);
             learningLevel.setText(newUser.getStep() + "/" + newUser.getSteps_count());
             ProgressBar learningProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-            NumberFormat format = NumberFormat.getCurrencyInstance();
-            Number number = format.parse(newUser.getConsciousness());
-            learningProgressBar.setProgress(number.intValue());
-            Log.d("*******", newUser.getImage());
 
+            learningProgressBar.setProgress(Integer.valueOf(newUser.getConsciousness()));
+            ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
+            DownloadImageTask downloadImageTask = new DownloadImageTask(setAvatar);
+            downloadImageTask.execute();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
     }
@@ -114,7 +121,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                SharedPreferences myPrefs = getSharedPreferences("",
+                SharedPreferences myPrefs = getSharedPreferences("data",
                         MODE_PRIVATE);
                 SharedPreferences.Editor editor = myPrefs.edit();
                 editor.clear();
@@ -183,8 +190,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.learning) {
-            LearningFragment learningFragment = new LearningFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
+            LearningFragment learningFragment= new LearningFragment();
             fragmentManager.beginTransaction().replace(R.id.frgmCont, learningFragment).commit();
 
 
@@ -234,6 +241,7 @@ public class MainActivity extends AppCompatActivity
                 url = new URL(baseurl);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("GET");
+
                 bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                 stringBuilder = new StringBuilder();
 
@@ -256,9 +264,16 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
+        @Override
         protected void onPostExecute(final UserPOJO token) {
             if (token != null) {
+
+                Gson gson = new Gson();
+                String json = gson.toJson(token);
+                SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                prefsEditor.putString("userInfo", json);
+                prefsEditor.commit();
 
                 super.onPostExecute(token);
             }
@@ -270,4 +285,31 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+
+
+    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            Bitmap mIcon = null;
+            try {
+                InputStream in = new java.net.URL("https://super-ego.info/uploads/user/thumb_2_10703.jpg").openStream();
+                mIcon = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
 }

@@ -47,8 +47,8 @@
                 android:id="@+id/user_photo"
                 android:layout_weight="0.90"
                 android:layout_gravity="center_vertical"
-                android:layout_width="65dp"
-                android:layout_height="94dp" />
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
 
             <Button
                 android:layout_width="match_parent"

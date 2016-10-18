@@ -37,11 +37,12 @@
                 android:id="@+id/textView_percent_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:text="60%"
                 android:textColor="@color/text_color_button"
                 android:textSize="14sp"
-                android:textStyle="normal|bold" />
+                android:textStyle="normal|bold"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
         <LinearLayout
@@ -79,6 +80,7 @@
                 android:textColor="@color/text_color_button"
                 android:layout_marginRight="@dimen/fab_margin"
                 android:textSize="10sp" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -86,7 +88,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/steps_info"
         android:layout_below="@+id/main_info"
         android:layout_marginTop="18dp">
@@ -116,10 +118,13 @@
                 android:visibility="visible" />
         </LinearLayout>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/steps_list_view" />
     </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:layout_below="@id/steps_info"
+        android:id="@+id/list_view_recycle"
+        tools:listitem="@layout/learning_list_item" />
 
 </RelativeLayout>
