@@ -45,7 +45,18 @@ public class FrgGoalsParent extends Fragment {
         adapter = new ArrayAdapter<String>(this.getContext(), R.layout.my_list_item, getGoalsServer());
         listGoalsLove.setAdapter(adapter);
     }
+    static class TestViewHolder extends RecyclerView.ViewHolder {
 
+        TextView titleTextView;
+        Button undoButton;
+
+        public TestViewHolder(ViewGroup parent) {
+            super(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_view_for_goal, parent, false));
+            titleTextView = (TextView) itemView.findViewById(R.id.title_text_view);
+            undoButton = (Button) itemView.findViewById(R.id.undo_button);
+        }
+
+    }
 }
 
 

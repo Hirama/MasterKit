@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Max Shalavin on 18.10.2016.
  */
-/*
+
 public  class GoalsFragmAdapter extends RecyclerView.Adapter {
 
     private static final int PENDING_REMOVAL_TIMEOUT = 3000; // 3sec
@@ -131,4 +131,4 @@ public  class GoalsFragmAdapter extends RecyclerView.Adapter {
         String item = list.get(position);
         return itemsPendingRemoval.contains(item);
     }
-}*/
+}
