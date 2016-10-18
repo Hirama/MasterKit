@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,7 +29,7 @@ import super_ego.info.masterkit.fragments.GoalsFrgDialog;
 public class GoalsFragment extends Fragment {
     private Toolbar toolbar;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     Button btnAddGoal;
     FrgGoalsParent frgGoalsParent = new FrgGoalsParent();
     ////////!!!!!!!!!!!!!1
@@ -43,14 +44,15 @@ public class GoalsFragment extends Fragment {
 
     public GoalsFragment() {
     }
-
+/*
     public static GoalsFragment newInstance(String param1, String param2) {
         GoalsFragment fragment = new GoalsFragment();
         Bundle args = new Bundle();
+      //  arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
         fragment.setArguments(args);
         return fragment;
     }
-
+*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +63,15 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frg_goals, container, false);
-        viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+        viewPager = (CustomViewPager) v.findViewById(R.id.viewpager);
+        viewPager.setPagingEnabled(false);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
         btnAddGoal = (Button) v.findViewById(R.id.btnAddGoal);
+       // pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
         View.OnClickListener oclBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +105,6 @@ public class GoalsFragment extends Fragment {
         adapter.addFrag(new FrgGoalsHelth(), "Helth");
         viewPager.setAdapter(adapter);
     }
-
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
 

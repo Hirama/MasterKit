@@ -40,7 +40,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
+        <super_ego.info.masterkit.CustomViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="450dp"
@@ -48,7 +48,7 @@
             android:layout_below="@+id/button7"
             android:layout_alignParentStart="true">
 
-        </android.support.v4.view.ViewPager>
+        </super_ego.info.masterkit.CustomViewPager>
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
