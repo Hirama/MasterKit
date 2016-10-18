@@ -66,13 +66,13 @@ public class LearningFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",0);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", 0);
         if (mPrefs.contains("user")) {
-            token=mPrefs.getString("user", "");
-        }else {
+            token = mPrefs.getString("user", "");
+        } else {
             token = getArguments().getString("token");
         }
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,11 +81,11 @@ public class LearningFragment extends Fragment {
 
         View liView = inflater.inflate(R.layout.fragment_learning, container, false);
         listView = (RecyclerView) liView.findViewById(R.id.list_view_recycle);
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("userInfo")) {
             Gson gson = new Gson();
             String json = mPrefs.getString("userInfo", "");
-            UserPOJO obj= gson.fromJson(json, UserPOJO.class);
+            UserPOJO obj = gson.fromJson(json, UserPOJO.class);
 
         }
 
@@ -113,15 +113,15 @@ public class LearningFragment extends Fragment {
     }
 
     private List<MaterialsPOJO> populateRecords() throws ExecutionException, InterruptedException {
-            GetLearningPlan plan = new GetLearningPlan(token);
-            LearingPlanPOJO learningPlan=null;
-            try {
-                learningPlan=plan.execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+        GetLearningPlan plan = new GetLearningPlan(token);
+        LearingPlanPOJO learningPlan = null;
+        try {
+            learningPlan = plan.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         return learningPlan.getResult();
 
     }

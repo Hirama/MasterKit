@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private UserGetData userDataTask = null;
     private UserPOJO newUser;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
@@ -89,7 +90,6 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-
     }
 
     private void setUserName() {
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
 
             learningProgressBar.setProgress(Integer.valueOf(newUser.getConsciousness()));
 //            ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
-            CircularImageView circularImageView = (CircularImageView)findViewById(R.id.user_photo);
+            CircularImageView circularImageView = (CircularImageView) findViewById(R.id.user_photo);
 
             // Set Border
 //            circularImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
@@ -204,18 +204,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.learning) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            LearningFragment learningFragment= new LearningFragment();
+            LearningFragment learningFragment = new LearningFragment();
             fragmentManager.beginTransaction().replace(R.id.frgmCont, learningFragment).commit();
 
 
         } else if (id == R.id.training) {
+            TrainerFragment trainerFragment = new TrainerFragment();
+            fragmentManager.beginTransaction().replace(R.id.frgmCont, trainerFragment).commit();
 
         } else if (id == R.id.master_kit) {
+            MasterKitFragment masterKitFragment = new MasterKitFragment();
+            fragmentManager.beginTransaction().replace(R.id.frgmCont, masterKitFragment).commit();
 
         } else if (id == R.id.goals) {
             GoalsFragment goalsFragment = new GoalsFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frgmCont, goalsFragment).commit();
 
         }
