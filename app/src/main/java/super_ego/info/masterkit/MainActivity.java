@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         LearningFragment learningFragment = new LearningFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.frgmCont, learningFragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -88,8 +87,6 @@ public class MainActivity extends AppCompatActivity
             learningFragment.setArguments(bundle);
 
         }
-
-
     }
 
     private void setUserName() {
@@ -108,14 +105,13 @@ public class MainActivity extends AppCompatActivity
             CircularImageView circularImageView = (CircularImageView) findViewById(R.id.user_photo);
 
             // Set Border
-//            circularImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
+            //            circularImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
             circularImageView.setBorderWidth(1);
-// Add Shadow with default param
+            // Add Shadow with default param
             circularImageView.addShadow();
-// or with custom param
+            // or with custom param
             circularImageView.setShadowRadius(10);
             circularImageView.setShadowColor(Color.TRANSPARENT);
-
 
             DownloadImageTask downloadImageTask = new DownloadImageTask(circularImageView);
             downloadImageTask.execute();
@@ -176,8 +172,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        // Update drawer info about user :D
         setUserName();
         return true;
     }
@@ -206,7 +201,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.learning) {
             LearningFragment learningFragment = new LearningFragment();
             fragmentManager.beginTransaction().replace(R.id.frgmCont, learningFragment).commit();
-
 
         } else if (id == R.id.training) {
             TrainerFragment trainerFragment = new TrainerFragment();
@@ -273,8 +267,6 @@ public class MainActivity extends AppCompatActivity
                 return gson.fromJson(response, UserPOJO.class);
             } catch (IOException e) {
                 return null;
-
-                // Error
             }
 
 
