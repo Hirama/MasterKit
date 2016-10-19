@@ -1,5 +1,6 @@
 package super_ego.info.masterkit.fragments;
 
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -20,12 +21,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.model.GoalSectionPOJO;
+import super_ego.info.masterkit.model.GoalsPOJO;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class FrgGoalsHelth extends FrgGoalsParent {
@@ -54,10 +62,20 @@ public class FrgGoalsHelth extends FrgGoalsParent {
 
     @Override
     protected List getGoalsServer() {
-        list = new ArrayList<>();
-        list.add("testhelth1");
-        list.add("testhelth2");
-        list.add("testhelth3");
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        if (mPrefs.contains("goals")) {
+            list = new ArrayList<>();
+            Gson gson = new Gson();
+            String json = mPrefs.getString("goals", "");
+            GoalResultPOJO obj= gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO=obj.getData();
+            for(GoalsPOJO i:goalSectionPOJO.getBody()){
+
+                    list.add(i.getTitle());
+
+            }
+
+        }
         return list;
     }
 

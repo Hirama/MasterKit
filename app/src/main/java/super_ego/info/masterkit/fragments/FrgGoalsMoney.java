@@ -1,6 +1,7 @@
 package super_ego.info.masterkit.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,11 +12,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.model.GoalSectionPOJO;
+import super_ego.info.masterkit.model.GoalsPOJO;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class FrgGoalsMoney extends FrgGoalsParent {
@@ -46,10 +54,20 @@ public class FrgGoalsMoney extends FrgGoalsParent {
     }*/
     @Override
     protected List getGoalsServer() {
-        list = new ArrayList<>();
-        list.add("testmoney1");
-        list.add("testmoney2");
-        list.add("testmoney3");
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        if (mPrefs.contains("goals")) {
+            list = new ArrayList<>();
+            Gson gson = new Gson();
+            String json = mPrefs.getString("goals", "");
+            GoalResultPOJO obj= gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO=obj.getData();
+            for(GoalsPOJO i:goalSectionPOJO.getMoney()){
+
+                    list.add(i.getTitle());
+
+            }
+
+        }
         return list;
     }
 /*

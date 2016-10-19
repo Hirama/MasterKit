@@ -35,6 +35,8 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.login.LoginActivity;
+import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.model.LearingPlanPOJO;
 import super_ego.info.masterkit.model.UserPOJO;
 import super_ego.info.masterkit.util.RestUrl;
 
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putString("token", value);
             learningFragment.setArguments(bundle);
+            GetGoals getGoals= new GetGoals(value);
+            getGoals.execute();
         }
 
         if (extras != null) {
@@ -83,10 +87,9 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putString("token", value);
             learningFragment.setArguments(bundle);
-
+            GetGoals getGoals= new GetGoals(value);
+            getGoals.execute();
         }
-
-
 
     }
 
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity
 
             learningProgressBar.setProgress(Integer.valueOf(newUser.getConsciousness()));
             ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
-            DownloadImageTask downloadImageTask = new DownloadImageTask(setAvatar);
+            DownloadImageTask downloadImageTask = new DownloadImageTask(setAvatar,newUser.getImage());
             downloadImageTask.execute();
 
         } catch (InterruptedException e) {
@@ -267,7 +270,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(final UserPOJO token) {
             if (token != null) {
-
+                super.onPostExecute(token);
                 Gson gson = new Gson();
                 String json = gson.toJson(token);
                 SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
@@ -275,7 +278,7 @@ public class MainActivity extends AppCompatActivity
                 prefsEditor.putString("userInfo", json);
                 prefsEditor.commit();
 
-                super.onPostExecute(token);
+
             }
 
         }
@@ -289,16 +292,18 @@ public class MainActivity extends AppCompatActivity
 
     public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+        String urlForAvatar;
 
-        public DownloadImageTask(ImageView bmImage) {
+        public DownloadImageTask(ImageView bmImage,String imageUrl) {
             this.bmImage = bmImage;
+            this.urlForAvatar=imageUrl;
         }
 
         @Override
         protected Bitmap doInBackground(String... params) {
             Bitmap mIcon = null;
             try {
-                InputStream in = new java.net.URL("https://super-ego.info/uploads/user/thumb_2_10703.jpg").openStream();
+                InputStream in = new java.net.URL(urlForAvatar).openStream();
                 mIcon = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
@@ -311,5 +316,63 @@ public class MainActivity extends AppCompatActivity
             bmImage.setImageBitmap(result);
         }
     }
+    public class GetGoals extends AsyncTask<Void, Void, GoalResultPOJO> {
 
+
+        private final String value;
+
+        GetGoals(String token) {
+            this.value = token;
+
+        }
+
+        @Override
+        protected GoalResultPOJO doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            final String baseurl = RestUrl.BASE_URL + "v1/user/get-goals" + "?access-token=" + value;
+            HttpURLConnection httpURLConnection;
+            BufferedReader bufferedReader = null;
+            StringBuilder stringBuilder = null;
+            String line = null;
+            URL url = null;
+            String response = null;
+            try {
+                url = new URL(baseurl);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+
+                bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                stringBuilder = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + '\n');
+                }
+                // Response from server after login process will be stored in response variable.
+                response = stringBuilder.toString();
+                Gson gson = new Gson();
+                return gson.fromJson(response, GoalResultPOJO.class);
+            } catch (IOException e) {
+                return null;
+
+                // Error
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final GoalResultPOJO goalResultPOJO) {
+            //super.onPostExecute(goalResultPOJO);
+            Gson gson = new Gson();
+            String json = gson.toJson(goalResultPOJO);
+            SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+            prefsEditor.putString("goals", json);
+            prefsEditor.commit();
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
 }

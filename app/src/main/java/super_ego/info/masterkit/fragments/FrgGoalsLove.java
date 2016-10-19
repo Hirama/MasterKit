@@ -1,5 +1,6 @@
 package super_ego.info.masterkit.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -7,12 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.model.GoalSectionPOJO;
+import super_ego.info.masterkit.model.GoalsPOJO;
+import super_ego.info.masterkit.model.UserPOJO;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FrgGoalsLove extends FrgGoalsParent {
 
@@ -45,10 +55,19 @@ public class FrgGoalsLove extends FrgGoalsParent {
 */
     @Override
     protected List getGoalsServer() {
-        list = new ArrayList<>();
-        list.add("testlove1");
-        list.add("testlove2");
-        list.add("testlove3");
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        if (mPrefs.contains("goals")) {
+            list = new ArrayList<>();
+            Gson gson = new Gson();
+            String json = mPrefs.getString("goals", "");
+            GoalResultPOJO obj= gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO=obj.getData();
+            for(GoalsPOJO i:goalSectionPOJO.getRelationship()){
+                   list.add(i.getTitle());
+
+            }
+
+        }
         return list;
     }
 /*

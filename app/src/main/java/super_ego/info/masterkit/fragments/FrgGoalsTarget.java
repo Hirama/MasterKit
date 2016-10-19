@@ -1,6 +1,7 @@
 package super_ego.info.masterkit.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.model.GoalSectionPOJO;
+import super_ego.info.masterkit.model.GoalsPOJO;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class FrgGoalsTarget extends FrgGoalsParent {
@@ -41,10 +49,20 @@ public class FrgGoalsTarget extends FrgGoalsParent {
 
     @Override
     protected List getGoalsServer() {
-        list = new ArrayList<>();
-        list.add("testtarget1");
-        list.add("testtarget2");
-        list.add("testtarget3");
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        if (mPrefs.contains("goals")) {
+            list = new ArrayList<>();
+            Gson gson = new Gson();
+            String json = mPrefs.getString("goals", "");
+            GoalResultPOJO obj= gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO=obj.getData();
+            for(GoalsPOJO i:goalSectionPOJO.getDestiny()){
+
+                    list.add(i.getTitle());
+
+            }
+
+        }
         return list;
     }
 }

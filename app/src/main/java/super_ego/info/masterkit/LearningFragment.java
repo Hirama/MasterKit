@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
@@ -86,12 +88,11 @@ public class LearningFragment extends Fragment {
             Gson gson = new Gson();
             String json = mPrefs.getString("userInfo", "");
             UserPOJO obj= gson.fromJson(json, UserPOJO.class);
-
+           // Log.d("******************",obj.getConsciousness());
+            ProgressBar learningProgressBar = (ProgressBar) listView.findViewById(R.id.learning_progress_bar_fragment);
+            learningProgressBar.setProgress(Integer.valueOf(obj.getConsciousness()));
         }
 
-//        ProgressBar learningProgressBar = (ProgressBar) listView.findViewById(R.id.progressBar);
-//        learningProgressBar.setProgress(Integer.valueOf(getArguments().getString("progress")));
-//
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         listView.setLayoutManager(mLayoutManager);
         listView.addItemDecoration(new DividerItemDecoration(this.getActivity(), LinearLayoutManager.VERTICAL));
