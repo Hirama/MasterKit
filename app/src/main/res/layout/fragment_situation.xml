@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,26 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Что меня волнует?"
-        android:textColor="@color/activity_tesxt_color"
+        android:text="@string/text_top_situation_fragment"
+        android:textColor="@color/contiune_button_color"
         android:textAllCaps="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:id="@+id/textViewTrainerSituation"
-        android:layout_marginTop="90dp" />
+        android:textSize="16sp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textViewTrainerSituation"
-        android:layout_marginTop="@dimen/activity_horizontal_margin">
+        android:layout_below="@id/textViewTrainerSituation">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_selector_navigation_item1" />
+            tools:listitem="@layout/situation_list_item_fragment"
+            android:id="@+id/situation_recycle_list"
+            android:background="@color/background_trainer_fragment" />
     </LinearLayout>
 
 </RelativeLayout>

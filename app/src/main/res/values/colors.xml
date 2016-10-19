@@ -12,4 +12,5 @@
     <color name="text_color_button">#546a79</color>
     <color name="activity_tesxt_color">#333333</color>
     <color name="text_color_button_opacity_20">#6d546a79</color>
+    <color name="background_trainer_fragment">#112132</color>
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/fear"
+        android:id="@+id/imageView_situation_item_fragment"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_situation_item_list_fragment"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
+            android:textAlignment="viewStart"
+            android:layout_marginTop="18dp"
+            android:layout_marginLeft="16dp"
+            android:capitalize="characters"
+            android:textSize="14sp"
+            android:lineSpacingExtra="0.67sp"
+            android:textStyle="normal|bold" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+            android:id="@+id/imageButton"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="16dp" />
+
+    </LinearLayout>
+</RelativeLayout>

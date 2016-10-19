@@ -44,7 +44,7 @@ public class TrainerFragment extends Fragment {
 
         final ViewPager viewPager = (ViewPager) liView.findViewById(R.id.pager);
         final PagerAdapterTrainer adapter = new PagerAdapterTrainer
-                (getFragmentManager(), tabLayout.getTabCount());
+                (getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
