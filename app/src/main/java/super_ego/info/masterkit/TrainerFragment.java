@@ -36,6 +36,7 @@ public class TrainerFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) liView.findViewById(R.id.toolbar_trainer);
         setSupportActionBar(toolbar);
+        getActivity().setTitle("Тренажёр");
 
         TabLayout tabLayout = (TabLayout) liView.findViewById(R.id.tab_layout_fragment_trainer);
         tabLayout.addTab(tabLayout.newTab().setText("Ситуация"));

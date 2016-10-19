@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
@@ -83,6 +81,7 @@ public class LearningFragment extends Fragment {
 
         View liView = inflater.inflate(R.layout.fragment_learning, container, false);
         listView = (RecyclerView) liView.findViewById(R.id.list_view_recycle);
+        getActivity().setTitle("Обучение");
         SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
         if (mPrefs.contains("userInfo")) {
             Gson gson = new Gson();

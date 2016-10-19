@@ -38,7 +38,6 @@ import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.login.LoginActivity;
 import super_ego.info.masterkit.model.GoalResultPOJO;
-import super_ego.info.masterkit.model.LearingPlanPOJO;
 import super_ego.info.masterkit.model.UserPOJO;
 import super_ego.info.masterkit.util.RestUrl;
 

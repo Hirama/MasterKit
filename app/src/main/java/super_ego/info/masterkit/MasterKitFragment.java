@@ -25,6 +25,7 @@ public class MasterKitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View liView = inflater.inflate(R.layout.fragment_master_kit, container, false);
+        getActivity().setTitle("Master Kit Live");
         return liView;
     }
 

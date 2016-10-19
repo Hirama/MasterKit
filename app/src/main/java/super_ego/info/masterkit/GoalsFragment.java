@@ -1,8 +1,6 @@
 package super_ego.info.masterkit;
 
 
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,22 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.gson.Gson;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import super_ego.info.masterkit.fragments.FrgGoalsHelth;
 import super_ego.info.masterkit.fragments.FrgGoalsLove;
@@ -33,11 +22,6 @@ import super_ego.info.masterkit.fragments.FrgGoalsMoney;
 import super_ego.info.masterkit.fragments.FrgGoalsParent;
 import super_ego.info.masterkit.fragments.FrgGoalsTarget;
 import super_ego.info.masterkit.fragments.GoalsFrgDialog;
-import super_ego.info.masterkit.model.GoalResultPOJO;
-import super_ego.info.masterkit.model.LearingPlanPOJO;
-import super_ego.info.masterkit.util.RestUrl;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class GoalsFragment extends Fragment {
@@ -75,6 +59,8 @@ public class GoalsFragment extends Fragment {
         viewPager = (CustomViewPager) v.findViewById(R.id.viewpager);
         viewPager.setPagingEnabled(false);
         setupViewPager(viewPager);
+
+        getActivity().setTitle("Мои цели");
 
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
