@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FrgGoalsTarget extends FrgGoalsParent {
 
-    ArrayAdapter<String> adapter;
-    ListView listGoalsLove;
-    List<String> list;
+
 
     public FrgGoalsTarget() {
         // Required empty public constructor
@@ -43,7 +42,9 @@ public class FrgGoalsTarget extends FrgGoalsParent {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frg_goals_target, container, false);
-        createAdapterAndListView(v,R.id.list_goal_target);
+        getGoalsServer();
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        setUpRecyclerView();
         return v;
     }
 
@@ -64,6 +65,10 @@ public class FrgGoalsTarget extends FrgGoalsParent {
 
         }
         return list;
+    }
+    public void addNewGoals() {
+        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
+        setUpRecyclerView();
     }
 }
 

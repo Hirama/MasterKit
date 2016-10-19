@@ -3,6 +3,7 @@ package super_ego.info.masterkit.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ public class FrgGoalsLove extends FrgGoalsParent {
 
 
     public FrgGoalsLove() {
-        // Required empty public constructor
     }
 
     @Override
@@ -40,41 +40,33 @@ public class FrgGoalsLove extends FrgGoalsParent {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frg_goals_love, container, false);
-        createAdapterAndListView(v,R.id.list_goal_love);
+        getGoalsServer();
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        setUpRecyclerView();
         return v;
     }
-/*
-    @Override
-    protected void createAdapterAndListView(View v,int listGoal) {
-        listGoalsLove = (ListView) v.findViewById(R.id.list_goal_love);
-        adapter = new ArrayAdapter<String>(this.getContext(), R.layout.my_list_item, getGoalsServer());
-        listGoalsLove.setAdapter(adapter);
 
-    }
-
-*/
     @Override
     protected List getGoalsServer() {
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("goals")) {
             list = new ArrayList<>();
             Gson gson = new Gson();
             String json = mPrefs.getString("goals", "");
-            GoalResultPOJO obj= gson.fromJson(json, GoalResultPOJO.class);
-            GoalSectionPOJO goalSectionPOJO=obj.getData();
-            for(GoalsPOJO i:goalSectionPOJO.getRelationship()){
-                   list.add(i.getTitle());
+            GoalResultPOJO obj = gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO = obj.getData();
+            for (GoalsPOJO i : goalSectionPOJO.getRelationship()) {
+                list.add(i.getTitle());
 
             }
 
         }
         return list;
     }
-/*
-    public void setListGoalsServer(String[] massGoalsFromServer) {
-        list.clear();
-        Collections.addAll(this.list, massGoalsFromServer);
 
-        adapter.notifyDataSetChanged();
-    }*/
+    public void addNewGoals() {
+        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
+        setUpRecyclerView();
+    }
+
 }
