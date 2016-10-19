@@ -29,12 +29,6 @@ public  class GoalsFragmAdapter extends RecyclerView.Adapter {
     public GoalsFragmAdapter(List<String> list) {
         this.list = list;
         itemsPendingRemoval = new ArrayList<>();
-        // let's generate some items
-        //  lastInsertedIndex = 15;
-        // this should give us a couple of screens worth
-        //    for (int i=1; i<= lastInsertedIndex; i++) {
-        //        list.add("Item " + i);
-        //   }
     }
 
     @Override
@@ -79,6 +73,18 @@ public  class GoalsFragmAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
+
+    public void addNewGoal(String[] newgoal){
+        newgoal = new String[]{"testadd2","testadd"};
+        if (newgoal.length > 0) {
+            for (int i =0; i < newgoal.length; i++) {
+                list.add(newgoal[i]);
+                notifyItemInserted(list.size() - 1);
+            }
+            lastInsertedIndex = lastInsertedIndex + newgoal.length;
+        }
+
+    }
 
     public void addItems(int howMany){
         if (howMany > 0) {

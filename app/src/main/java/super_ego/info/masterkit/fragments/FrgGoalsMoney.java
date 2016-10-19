@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class FrgGoalsMoney extends FrgGoalsParent {
-    
+
 
     public FrgGoalsMoney() {
     }
@@ -41,42 +42,35 @@ public class FrgGoalsMoney extends FrgGoalsParent {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frg_goals_money, container, false);
-        createAdapterAndListView(v,R.id.list_goal_money);
-
+        getGoalsServer();
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        setUpRecyclerView();
         return v;
     }
-/*
-    private void createAdapterAndListView(View v) {
-        listGoalsMoney = (ListView) v.findViewById(R.id.list_goal_money);
-        adapter = new ArrayAdapter<String>(this.getContext(), R.layout.my_list_item, getGoalsServer());
-        listGoalsMoney.setAdapter(adapter);
 
-    }*/
     @Override
     protected List getGoalsServer() {
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("goals")) {
             list = new ArrayList<>();
             Gson gson = new Gson();
             String json = mPrefs.getString("goals", "");
-            GoalResultPOJO obj= gson.fromJson(json, GoalResultPOJO.class);
-            GoalSectionPOJO goalSectionPOJO=obj.getData();
-            for(GoalsPOJO i:goalSectionPOJO.getMoney()){
+            GoalResultPOJO obj = gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO = obj.getData();
+            for (GoalsPOJO i : goalSectionPOJO.getMoney()) {
 
-                    list.add(i.getTitle());
+                list.add(i.getTitle());
 
             }
 
         }
         return list;
     }
-/*
-    public void setListGoalsServer(String[] massGoalsFromServer) {
-        list.clear();
-        Collections.addAll(this.list, massGoalsFromServer);
 
-        adapter.notifyDataSetChanged();
+    public void addNewGoals() {
+        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
+        setUpRecyclerView();
     }
-*/
+
 
 }

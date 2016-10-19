@@ -5,11 +5,13 @@
     tools:context="super_ego.info.masterkit.fragments.FrgGoalsHelth"
     android:layout_marginTop="?attr/actionBarSize">
 
-    <ListView
-        android:id="@+id/list_goal_helth"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_below="@+id/relativeLayout" />
+
     <RelativeLayout
         android:id ="@+id/relativeLayout"
         android:orientation="vertical"
@@ -27,7 +29,7 @@
             android:id="@+id/textView"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-                android:textColor="#323232" />
+            android:textColor="#323232" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -48,6 +48,9 @@ public class GoalsFragment extends Fragment {
     FrgGoalsParent frgGoalsParent = new FrgGoalsParent();
     ////////!!!!!!!!!!!!!1
     FrgGoalsMoney frgGoalsMoney = new FrgGoalsMoney();
+    FrgGoalsHelth frgGoalsHelth = new FrgGoalsHelth();
+    FrgGoalsLove frgGoalsLove = new FrgGoalsLove();
+    FrgGoalsTarget frgGoalsTarget = new FrgGoalsTarget();
 ////////////////////////!!!!!!!!!!!!1
     private int[] tabIcons = {
             R.drawable.goal_money,
@@ -58,15 +61,7 @@ public class GoalsFragment extends Fragment {
 
     public GoalsFragment() {
     }
-/*
-    public static GoalsFragment newInstance(String param1, String param2) {
-        GoalsFragment fragment = new GoalsFragment();
-        Bundle args = new Bundle();
-      //  arguments.putInt(ARGUMENT_PAGE_NUMBER, page);
-        fragment.setArguments(args);
-        return fragment;
-    }
-*/
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,25 +80,21 @@ public class GoalsFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
         btnAddGoal = (Button) v.findViewById(R.id.btnAddGoal);
-       // pageNumber = getArguments().getInt(ARGUMENT_PAGE_NUMBER);
         View.OnClickListener oclBtn = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String[] found = new String[]{"1", "2", "3"};
                 new GoalsFrgDialog().show(getActivity().getSupportFragmentManager(),
                         "login");
-                frgGoalsMoney.setListGoalsServer(found);
-              //   ((FrgGoalsParent) getActivity().getSupportFragmentManager().getFragment()).setListGoalsServer(found);
+
+                frgGoalsMoney.addNewGoals();
+                frgGoalsHelth.addNewGoals();
+                frgGoalsLove.addNewGoals();
+                frgGoalsTarget.addNewGoals();
 
             }
         };
         btnAddGoal.setOnClickListener(oclBtn);
-//        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
-//        if (mPrefs.contains("user")) {
-//            String token = mPrefs.getString("token", "");
-//            GetGoals getGoals= new GetGoals(token);
-//            getGoals.execute();
-//        }
         return v;
     }
 
@@ -119,9 +110,9 @@ public class GoalsFragment extends Fragment {
         GoalsFragment.ViewPagerAdapter adapter = new GoalsFragment.ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
         adapter.addFrag(frgGoalsMoney, "Money ");
-        adapter.addFrag(new FrgGoalsLove(), "Love");
-        adapter.addFrag(new FrgGoalsTarget(), "Target");
-        adapter.addFrag(new FrgGoalsHelth(), "Helth");
+        adapter.addFrag(frgGoalsLove, "Love");
+        adapter.addFrag(frgGoalsTarget, "Target");
+        adapter.addFrag(frgGoalsHelth, "Helth");
         viewPager.setAdapter(adapter);
     }
 
@@ -152,7 +143,6 @@ public class GoalsFragment extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-
             // return null to display only the icon
             return null;
         }
