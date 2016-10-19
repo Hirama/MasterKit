@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -324,6 +325,73 @@ public class MainActivity extends AppCompatActivity
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+    public class GetGoals extends AsyncTask<Void, Void, GoalResultPOJO> {
+
+
+        private final String value;
+
+
+        GetGoals(String token) {
+            this.value = token;
+        }
+
+        @Override
+        protected GoalResultPOJO doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            final String baseurl = RestUrl.BASE_URL + "v1/user/get-goals" + "?access-token=" + value;
+            HttpURLConnection httpURLConnection;
+            BufferedReader bufferedReader = null;
+            StringBuilder stringBuilder = null;
+            String line = null;
+            URL url = null;
+            String response = null;
+            try {
+                url = new URL(baseurl);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+
+                bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                stringBuilder = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + '\n');
+                }
+                // Response from server after login process will be stored in response variable.
+                response = stringBuilder.toString();
+
+                // You can perform UI operations here
+
+                Gson gson = new Gson();
+                return gson.fromJson(response, GoalResultPOJO.class);
+            } catch (IOException e) {
+                return null;
+            }
+
+
+        }
+
+        @Override
+        protected void onPostExecute(final GoalResultPOJO token) {
+            if (token != null) {
+                super.onPostExecute(token);
+                Gson gson = new Gson();
+                String json = gson.toJson(token);
+                SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                prefsEditor.putString("goals", json);
+                prefsEditor.commit();
+
+
+            }
+
+        }
+
+        @Override
+        protected void onCancelled() {
+
         }
     }
 
