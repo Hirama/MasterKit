@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="40dp">
 
             <Button
                 android:layout_width="wrap_content"
@@ -41,14 +41,25 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp" />
 
-            <ImageView
-                app:srcCompat="@mipmap/ic_launcher"
-                android:scaleType="center"
+            <!--<ImageView-->
+                <!--app:srcCompat="@mipmap/ic_launcher"-->
+                <!--android:scaleType="center"-->
+                <!--android:id="@+id/user_photo"-->
+                <!--android:layout_weight="0.90"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp" />-->
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:id="@+id/user_photo"
-                android:layout_weight="0.90"
-                android:layout_gravity="center_vertical"
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+                android:src="@mipmap/ic_launcher"
+                app:civ_border_color="#EEEEEE"
+                app:civ_border_width="4dp"
+                app:civ_shadow="true"
+                app:civ_shadow_radius="10"
+                app:civ_shadow_color="#8BC34A"/>
 
             <Button
                 android:layout_width="match_parent"
@@ -70,7 +81,7 @@
             android:id="@+id/user_name"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:textColor="@android:color/white"
             android:fontFamily="sans-serif" />
 
@@ -78,7 +89,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:text="6/11"
@@ -103,7 +114,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="6dp">
 
             <TextView
                 android:text="Обучение"
@@ -113,7 +124,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:text="Уровень"
@@ -123,7 +134,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <ProgressBar
@@ -133,7 +144,7 @@
             android:progress="58"
             android:visibility="visible"
             android:max="100"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:progressDrawable="@drawable/rounded_progress"
             android:layout_width="match_parent"
             android:layout_marginLeft="16dp"

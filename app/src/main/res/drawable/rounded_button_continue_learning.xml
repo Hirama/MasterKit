@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
     <gradient
@@ -15,5 +15,5 @@
         android:bottomLeftRadius="1.98dp"
         android:bottomRightRadius="1.98dp"
         android:topLeftRadius="1.98dp"
-        android:topRightRadius="1.98dp"></corners>
+        android:topRightRadius="1.98dp" />
 </shape>

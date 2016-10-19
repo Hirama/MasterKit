@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private UserGetData userDataTask = null;
     private UserPOJO newUser;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
@@ -53,7 +55,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         LearningFragment learningFragment = new LearningFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.frgmCont, learningFragment).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -99,14 +100,25 @@ public class MainActivity extends AppCompatActivity
             TextView fnameANDlname = (TextView) findViewById(R.id.user_name);
             fnameANDlname.setText(newUser.getFirst_name() + " " + newUser.getLast_name());
             TextView level = (TextView) findViewById(R.id.user_level_text);
-            level.setText(newUser.getLevel().toString());
+            level.setText(String.valueOf(newUser.getLevel()));
             TextView learningLevel = (TextView) findViewById(R.id.learning_level_text);
             learningLevel.setText(newUser.getStep() + "/" + newUser.getSteps_count());
             ProgressBar learningProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
             learningProgressBar.setProgress(Integer.valueOf(newUser.getConsciousness()));
-            ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
-            DownloadImageTask downloadImageTask = new DownloadImageTask(setAvatar,newUser.getImage());
+//            ImageView setAvatar = (ImageView) findViewById(R.id.user_photo);
+            CircularImageView circularImageView = (CircularImageView) findViewById(R.id.user_photo);
+
+            // Set Border
+            //            circularImageView.setBorderColor(getResources().getColor(R.color.colorPrimary));
+            circularImageView.setBorderWidth(1);
+            // Add Shadow with default param
+            circularImageView.addShadow();
+            // or with custom param
+            circularImageView.setShadowRadius(10);
+            circularImageView.setShadowColor(Color.TRANSPARENT);
+
+            DownloadImageTask downloadImageTask = new DownloadImageTask(circularImageView,newUser.getImage());
             downloadImageTask.execute();
 
         } catch (InterruptedException e) {
@@ -165,8 +177,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        // Update drawer info about user :D
         setUserName();
         return true;
     }
@@ -193,18 +204,19 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.learning) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            LearningFragment learningFragment= new LearningFragment();
+            LearningFragment learningFragment = new LearningFragment();
             fragmentManager.beginTransaction().replace(R.id.frgmCont, learningFragment).commit();
 
-
         } else if (id == R.id.training) {
+            TrainerFragment trainerFragment = new TrainerFragment();
+            fragmentManager.beginTransaction().replace(R.id.frgmCont, trainerFragment).commit();
 
         } else if (id == R.id.master_kit) {
+            MasterKitFragment masterKitFragment = new MasterKitFragment();
+            fragmentManager.beginTransaction().replace(R.id.frgmCont, masterKitFragment).commit();
 
         } else if (id == R.id.goals) {
             GoalsFragment goalsFragment = new GoalsFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.frgmCont, goalsFragment).commit();
 
         }
@@ -260,8 +272,6 @@ public class MainActivity extends AppCompatActivity
                 return gson.fromJson(response, UserPOJO.class);
             } catch (IOException e) {
                 return null;
-
-                // Error
             }
 
 
@@ -316,63 +326,5 @@ public class MainActivity extends AppCompatActivity
             bmImage.setImageBitmap(result);
         }
     }
-    public class GetGoals extends AsyncTask<Void, Void, GoalResultPOJO> {
 
-
-        private final String value;
-
-        GetGoals(String token) {
-            this.value = token;
-
-        }
-
-        @Override
-        protected GoalResultPOJO doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            final String baseurl = RestUrl.BASE_URL + "v1/user/get-goals" + "?access-token=" + value;
-            HttpURLConnection httpURLConnection;
-            BufferedReader bufferedReader = null;
-            StringBuilder stringBuilder = null;
-            String line = null;
-            URL url = null;
-            String response = null;
-            try {
-                url = new URL(baseurl);
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("GET");
-
-                bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-                stringBuilder = new StringBuilder();
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line + '\n');
-                }
-                // Response from server after login process will be stored in response variable.
-                response = stringBuilder.toString();
-                Gson gson = new Gson();
-                return gson.fromJson(response, GoalResultPOJO.class);
-            } catch (IOException e) {
-                return null;
-
-                // Error
-            }
-        }
-
-        @Override
-        protected void onPostExecute(final GoalResultPOJO goalResultPOJO) {
-            //super.onPostExecute(goalResultPOJO);
-            Gson gson = new Gson();
-            String json = gson.toJson(goalResultPOJO);
-            SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
-            SharedPreferences.Editor prefsEditor = mPrefs.edit();
-            prefsEditor.putString("goals", json);
-            prefsEditor.commit();
-        }
-
-        @Override
-        protected void onCancelled() {
-
-        }
-    }
 }

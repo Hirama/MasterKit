@@ -68,7 +68,7 @@ public class LearningFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",0);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", 0);
         if (mPrefs.contains("user")) {
             token=mPrefs.getString("user", "");
         }else {
@@ -87,12 +87,13 @@ public class LearningFragment extends Fragment {
         if (mPrefs.contains("userInfo")) {
             Gson gson = new Gson();
             String json = mPrefs.getString("userInfo", "");
-            UserPOJO obj= gson.fromJson(json, UserPOJO.class);
-           // Log.d("******************",obj.getConsciousness());
-            ProgressBar learningProgressBar = (ProgressBar) listView.findViewById(R.id.learning_progress_bar_fragment);
-            learningProgressBar.setProgress(Integer.valueOf(obj.getConsciousness()));
+            UserPOJO obj = gson.fromJson(json, UserPOJO.class);
+
         }
 
+//        ProgressBar learningProgressBar = (ProgressBar) listView.findViewById(R.id.progressBar);
+//        learningProgressBar.setProgress(Integer.valueOf(getArguments().getString("progress")));
+//
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         listView.setLayoutManager(mLayoutManager);
         listView.addItemDecoration(new DividerItemDecoration(this.getActivity(), LinearLayoutManager.VERTICAL));
