@@ -5,6 +5,7 @@ android {
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "super_ego.info.masterkit"
+        vectorDrawables.useSupportLibrary = true
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1

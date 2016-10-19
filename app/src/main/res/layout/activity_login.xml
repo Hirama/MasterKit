@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alwaysDrawnWithCache="false"
     android:fitsSystemWindows="true">
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/loginImage_full"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
         android:scaleType="center"
-        android:src="@mipmap/bg_loginhd"
-        tools:ignore="RtlHardcoded" />
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/loginimage"
+        app:srcCompat="@mipmap/bg_loginhd"
+        tools:ignore="MissingPrefix"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,18 +33,20 @@
 
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="match_parent"
+            android:id="@+id/app_logo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="97dp"
-            app:srcCompat="@mipmap/logo_signup" />
+            app:srcCompat="@mipmap/logo_signup"
+            android:layout_marginLeft="61dp"
+            android:layout_marginRight="75dp" />
 
 
         <!-- Login progress -->
 
         <ProgressBar
             android:id="@+id/login_progress"
-            style="?android:attr/progressBarStyleLarge"
+            style="@android:style/Widget.Material.Light.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -54,9 +56,9 @@
         <ScrollView
             android:id="@+id/login_form"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="50dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="50dp">
 
             <LinearLayout
                 android:id="@+id/email_login_form"
@@ -137,7 +139,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
                     android:autoLink="web"
                     android:background="@color/forgot_button"
                     android:text="@string/forgot_link"
@@ -147,5 +148,6 @@
 
             </LinearLayout>
         </ScrollView>
+
     </LinearLayout>
 </RelativeLayout>
