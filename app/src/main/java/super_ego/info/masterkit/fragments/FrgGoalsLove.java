@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +29,13 @@ import static android.content.Context.MODE_PRIVATE;
 public class FrgGoalsLove extends FrgGoalsParent {
 
 
+
+    public final String relationship="relationship";
     public FrgGoalsLove() {
     }
-
+    public String getMoney() {
+        return relationship;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +66,24 @@ public class FrgGoalsLove extends FrgGoalsParent {
             }
 
         }
+
         return list;
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
-    public void addNewGoals() {
-        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
-        setUpRecyclerView();
+        if (isVisibleToUser) {
+            Log.d("******","Love");
+        }
+    }
+    public void addNewGoals(String goal) {
+        if(getUserVisibleHint()) {
+            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
+            setUpRecyclerView();
+        }else{
+            Log.d("******","it is not visible");
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,23 +34,19 @@ public class FrgGoalsParent extends Fragment {
     ArrayAdapter<String> adapter;
     ListView listGoalsLove;
     List<String> list;
-
     RecyclerView mRecyclerView;
 
     protected List getGoalsServer() {
         list = new ArrayList<>();
-        list.add("testlove1");
-        list.add("testlove2");
-        list.add("testlove3");
         return list;
     }
 
-    public void setListGoalsServer(String[] massGoalsFromServer) {
-        list.clear();
-        Collections.addAll(this.list, massGoalsFromServer);
-
-        adapter.notifyDataSetChanged();
-    }
+//    public void setListGoalsServer(String[] massGoalsFromServer) {
+//        list.clear();
+//        Collections.addAll(this.list, massGoalsFromServer);
+//
+//        adapter.notifyDataSetChanged();
+//    }
 
     protected void createAdapterAndListView(View v, int listGoal) {
         listGoalsLove = (ListView) v.findViewById(listGoal);
@@ -89,7 +86,11 @@ public class FrgGoalsParent extends Fragment {
         setUpItemTouchHelper();
         setUpAnimationDecoratorHelper();
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
+    }
     protected void setUpItemTouchHelper() {
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

@@ -36,6 +36,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
+
+
 import super_ego.info.masterkit.login.LoginActivity;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.UserPOJO;
@@ -77,8 +79,10 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putString("token", value);
             learningFragment.setArguments(bundle);
-            GetGoals getGoals= new GetGoals(value);
+            GetGoals getGoals = new GetGoals(value);
             getGoals.execute();
+//            SetGoalToAPI setGoalToAPI= new SetGoalToAPI(value,"Checked","Cheked");
+//            Log.d("***********",setGoalToAPI.sendGoalsToApi());
         }
 
         if (extras != null) {
@@ -88,8 +92,10 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putString("token", value);
             learningFragment.setArguments(bundle);
-            GetGoals getGoals= new GetGoals(value);
+            GetGoals getGoals = new GetGoals(value);
             getGoals.execute();
+//            SetGoalToAPI setGoalToAPI= new SetGoalToAPI(value,"Checked","Cheked");
+//            Log.d("***********",setGoalToAPI.sendGoalsToApi());
         }
 
     }
@@ -118,7 +124,7 @@ public class MainActivity extends AppCompatActivity
             circularImageView.setShadowRadius(10);
             circularImageView.setShadowColor(Color.TRANSPARENT);
 
-            DownloadImageTask downloadImageTask = new DownloadImageTask(circularImageView,newUser.getImage());
+            DownloadImageTask downloadImageTask = new DownloadImageTask(circularImageView, newUser.getImage());
             downloadImageTask.execute();
 
         } catch (InterruptedException e) {
@@ -304,9 +310,9 @@ public class MainActivity extends AppCompatActivity
         ImageView bmImage;
         String urlForAvatar;
 
-        public DownloadImageTask(ImageView bmImage,String imageUrl) {
+        public DownloadImageTask(ImageView bmImage, String imageUrl) {
             this.bmImage = bmImage;
-            this.urlForAvatar=imageUrl;
+            this.urlForAvatar = imageUrl;
         }
 
         @Override
@@ -326,14 +332,15 @@ public class MainActivity extends AppCompatActivity
             bmImage.setImageBitmap(result);
         }
     }
+
     public class GetGoals extends AsyncTask<Void, Void, GoalResultPOJO> {
 
 
         private final String value;
 
-
-        GetGoals(String token) {
+        public GetGoals(String token) {
             this.value = token;
+
         }
 
         @Override
@@ -383,15 +390,16 @@ public class MainActivity extends AppCompatActivity
                 prefsEditor.putString("goals", json);
                 prefsEditor.commit();
 
-
             }
 
-        }
+            //  }
 
+        }
         @Override
-        protected void onCancelled() {
+        protected void onCancelled () {
 
         }
     }
+
 
 }

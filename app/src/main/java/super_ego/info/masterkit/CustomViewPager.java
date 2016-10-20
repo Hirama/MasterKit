@@ -1,9 +1,11 @@
 package super_ego.info.masterkit;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 
 /**
  * Created by Max Shalavin on 18.10.2016.
@@ -23,6 +25,7 @@ public class CustomViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         return this.isPagingEnabled && super.onTouchEvent(event);
     }
 
@@ -34,4 +37,6 @@ public class CustomViewPager extends ViewPager {
     public void setPagingEnabled(boolean b) {
         this.isPagingEnabled = b;
     }
+
+
 }

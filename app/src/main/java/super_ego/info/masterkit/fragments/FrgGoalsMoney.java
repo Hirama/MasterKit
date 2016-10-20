@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import super_ego.info.masterkit.GoalsFragment;
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.GoalSectionPOJO;
@@ -30,12 +32,20 @@ import static android.content.Context.MODE_PRIVATE;
 public class FrgGoalsMoney extends FrgGoalsParent {
 
 
+    public final String money="money";
+
+
     public FrgGoalsMoney() {
+    }
+    public String getMoney() {
+        return money;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -45,6 +55,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         getGoalsServer();
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         setUpRecyclerView();
+
         return v;
     }
 
@@ -55,6 +66,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             list = new ArrayList<>();
             Gson gson = new Gson();
             String json = mPrefs.getString("goals", "");
+            Log.d("**********",json);
             GoalResultPOJO obj = gson.fromJson(json, GoalResultPOJO.class);
             GoalSectionPOJO goalSectionPOJO = obj.getData();
             for (GoalsPOJO i : goalSectionPOJO.getMoney()) {
@@ -66,10 +78,21 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         }
         return list;
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
-    public void addNewGoals() {
-        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
-        setUpRecyclerView();
+        if (isVisibleToUser) {
+            Log.d("******","money");
+        }
+    }
+    public void addNewGoals(String goal) {
+        if(getUserVisibleHint()) {
+            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
+             setUpRecyclerView();
+        }else{
+            Log.d("******","it is not visible");
+        }
     }
 
 
