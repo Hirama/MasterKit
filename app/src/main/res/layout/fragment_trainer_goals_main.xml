@@ -1,0 +1,45 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment">
+
+    <TextView
+        android:text="adasdasdasdasdasd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView2" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/playbutton"
+        android:id="@+id/imgBtnPlay"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="73dp" />
+
+    <RelativeLayout
+    android:id ="@+id/relativeLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="15pt"
+    android:background="?attr/colorButtonNormal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
+
+    <TextView
+        android:text="СНИМАЕМ ЧУВСТВО ВИНЫ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#323232" />
+</RelativeLayout>
+
+</RelativeLayout>
