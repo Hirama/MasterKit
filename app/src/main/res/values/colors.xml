@@ -13,4 +13,6 @@
     <color name="activity_tesxt_color">#333333</color>
     <color name="text_color_button_opacity_20">#6d546a79</color>
     <color name="background_trainer_fragment">#112132</color>
+    <color name="video_title_text_color">#234264</color>
+    <color name="text_color_date">#98234264</color>
 </resources>

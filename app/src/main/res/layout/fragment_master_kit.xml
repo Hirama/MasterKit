@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="56dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textViewSoonTranslations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="13dp"
+        android:text="Ближайшая онлайн-трансляция"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/text_color_button" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:background="@drawable/mklive_img"
+        android:scaleType="center" />
+
+    <TextView
+        android:id="@+id/textViewVideoTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="17dp"
+        android:text="Неприятные качества"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/video_title_text_color"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="23 ноября 19:00 (Понедельник)"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/text_color_date"
+        android:textSize="12sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:id="@+id/textView_past_translations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:fontFamily="sans-serif"
+        android:text="прошедшие трансляции"
+        android:textAllCaps="true"
+        android:textSize="12sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/video_recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="22dp"
+        android:orientation="horizontal"
+        tools:listitem="@layout/video_list_item_master_kit" />
+
 
 </LinearLayout>
