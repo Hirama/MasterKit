@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     android:layout_marginTop="56dp"
     android:orientation="vertical">
 
@@ -58,7 +56,8 @@
         android:fontFamily="sans-serif"
         android:text="прошедшие трансляции"
         android:textAllCaps="true"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_marginLeft="16dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/video_recycle_view"
@@ -66,7 +65,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="22dp"
         android:orientation="horizontal"
-        tools:listitem="@layout/video_list_item_master_kit" />
+        tools:listitem="@layout/video_list_item_master_kit"
+        android:layout_marginLeft="16dp" />
 
 
 </LinearLayout>
