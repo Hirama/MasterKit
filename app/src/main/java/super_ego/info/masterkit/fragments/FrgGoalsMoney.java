@@ -1,11 +1,13 @@
 package super_ego.info.masterkit.fragments;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.GoalSectionPOJO;
 import super_ego.info.masterkit.model.GoalsPOJO;
@@ -58,7 +61,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
                                     int position) {
                 Log.d("+++++++++++++++++", "sss" + position);
                 TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
-                FragmentTransaction fTrans;
+                android.support.v4.app.FragmentTransaction fTrans;
                 fTrans = getFragmentManager().beginTransaction();
                 fTrans.replace(R.id.frgmCont, trainerGoalsMainFragment);
                 fTrans.addToBackStack("trainerGoals");
@@ -91,7 +94,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
     }
 
     public void addNewGoals() {
-        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
+        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal("sfsdf");
         setUpRecyclerView();
     }
 

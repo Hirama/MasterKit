@@ -1,19 +1,37 @@
 package super_ego.info.masterkit;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.adapter.RecycleViewAdapterMasterKit;
+import super_ego.info.masterkit.model.UserPOJO;
+import super_ego.info.masterkit.model.VideoDataPOJO;
 import super_ego.info.masterkit.model.VideoModel;
+import super_ego.info.masterkit.model.YouTubeVideoPOJO;
+import super_ego.info.masterkit.util.RestUrl;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Andrey on 18.10.2016.
@@ -38,23 +56,43 @@ public class MasterKitFragment extends Fragment {
                              Bundle savedInstanceState) {
         View liView = inflater.inflate(R.layout.fragment_master_kit, container, false);
         videoList = (RecyclerView) liView.findViewById(R.id.video_recycle_view);
-
+        TextView videoTitleMain = (TextView) liView.findViewById(R.id.textViewVideoTitleMain);
+        TextView videoDateMain = (TextView) liView.findViewById(R.id.textViewVideoTimeStamp);
         getActivity().setTitle("Master Kit Live");
 
         mLayoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         videoList.setLayoutManager(mLayoutManager);
-
+        String token="";
+        SharedPreferences mPrefs = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        if (mPrefs.contains("user")) {
+            token=mPrefs.getString("user","");
+        }
+        YouTubeVideoPOJO youTubeVideoPOJO=null;
+        GetVideoInfo getVideoInfo= new GetVideoInfo(token);
+        try {
+            youTubeVideoPOJO=getVideoInfo.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         List<VideoModel> records = new ArrayList<>();
-        VideoModel videoModel = new VideoModel();
-        videoModel.setDate("23 ноября 2016");
-        videoModel.setName("Методика в Жизни");
-        videoModel.setImage(R.mipmap.small_video);
-        records.add(videoModel);
-        VideoModel videoModel1 = new VideoModel();
-        videoModel1.setDate("13 ноября 2016");
-        videoModel1.setName("Универсальные методики");
-        videoModel1.setImage(R.mipmap.small_video);
-        records.add(videoModel1);
+        List<VideoDataPOJO> videoDataPOJOs =youTubeVideoPOJO.getData().getHistory();
+
+        VideoDataPOJO videoDataPOJOLast= youTubeVideoPOJO.getData().getLast();
+
+        videoTitleMain.setText(videoDataPOJOLast.getTitle());
+        videoDateMain.setText(videoDataPOJOLast.getSubtitle());
+
+
+       for(VideoDataPOJO i:videoDataPOJOs){
+           VideoModel videoModelhistory = new VideoModel();
+           videoModelhistory.setDate(i.getSubtitle());
+           videoModelhistory.setName(i.getTitle());
+           videoModelhistory.setImage(R.mipmap.small_video);
+           videoModelhistory.setVideoId(i.getVideo());
+           records.add(videoModelhistory);
+       }
         mAdapter = new RecycleViewAdapterMasterKit(records);
         videoList.setAdapter(mAdapter);
         return liView;
@@ -69,5 +107,65 @@ public class MasterKitFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public class GetVideoInfo extends AsyncTask<Void, Void, YouTubeVideoPOJO> {
+
+
+        private final String value;
+
+
+        GetVideoInfo(String token) {
+            value = token;
+        }
+
+        @Override
+        protected YouTubeVideoPOJO doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+            final String baseurl = RestUrl.BASE_URL + "v1/live/get-lives" + "?access-token=" + value;
+            HttpURLConnection httpURLConnection;
+            BufferedReader bufferedReader = null;
+            StringBuilder stringBuilder = null;
+            String line = null;
+            URL url = null;
+            String response = null;
+            try {
+                url = new URL(baseurl);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+
+                bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                stringBuilder = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + '\n');
+                }
+                // Response from server after login process will be stored in response variable.
+                response = stringBuilder.toString();
+
+                // You can perform UI operations here
+
+                Gson gson = new Gson();
+                return gson.fromJson(response, YouTubeVideoPOJO.class);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final YouTubeVideoPOJO token) {
+            if (token != null) {
+                super.onPostExecute(token);
+                Gson gson = new Gson();
+                String json = gson.toJson(token);
+                SharedPreferences mPrefs = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                prefsEditor.putString("video", json);
+                prefsEditor.commit();
+
+            }
+        }
+
     }
 }

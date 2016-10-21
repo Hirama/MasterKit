@@ -36,6 +36,12 @@ public class RecycleViewAdapterMasterKit extends RecyclerView.Adapter<RecycleVie
         holder.textView_date.setText(videoModel.getDate());
         holder.textView_name.setText(videoModel.getName());
         holder.imageView.setImageResource(videoModel.getImage());
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override

@@ -8,6 +8,7 @@ public class VideoModel {
     String date;
     String name;
     int image;
+    String videoId;
 
     public String getDate() {
         return date;
@@ -31,5 +32,13 @@ public class VideoModel {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 }
