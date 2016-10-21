@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import super_ego.info.masterkit.GoalsFragment;
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.GoalSectionPOJO;
@@ -32,13 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class FrgGoalsMoney extends FrgGoalsParent {
 
 
-    public final String money="money";
-
-
     public FrgGoalsMoney() {
-    }
-    public String getMoney() {
-        return money;
     }
 
     @Override
@@ -55,7 +47,26 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         getGoalsServer();
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         setUpRecyclerView();
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext()) {
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
+            }
+
+            @Override
+            public void onItemClick(RecyclerView recyclerView, View itemView,
+                                    int position) {
+                Log.d("+++++++++++++++++", "sss" + position);
+                TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
+                FragmentTransaction fTrans;
+                fTrans = getFragmentManager().beginTransaction();
+                fTrans.replace(R.id.frgmCont, trainerGoalsMainFragment);
+                fTrans.addToBackStack("trainerGoals");
+                fTrans.commit();
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, trainerGoalsMainFragment).commit();
+
+            }
+        });
         return v;
     }
 
@@ -78,21 +89,10 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         }
         return list;
     }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
 
-        if (isVisibleToUser) {
-            Log.d("******","money");
-        }
-    }
-    public void addNewGoals(String goal) {
-        if(getUserVisibleHint()) {
-            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
-             setUpRecyclerView();
-        }else{
-            Log.d("******","it is not visible");
-        }
+    public void addNewGoals() {
+        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
+        setUpRecyclerView();
     }
 
 

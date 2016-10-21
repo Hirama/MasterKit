@@ -36,6 +36,9 @@ public  class GoalsFragmAdapter extends RecyclerView.Adapter {
         return new FrgGoalsParent.TestViewHolder(parent);
     }
 
+
+
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         FrgGoalsParent.TestViewHolder viewHolder = (FrgGoalsParent.TestViewHolder)holder;
