@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+
 import super_ego.info.masterkit.adapter.DividerItemDecoration;
 import super_ego.info.masterkit.adapter.RecyclerViewAdapterLearning;
 import super_ego.info.masterkit.model.LearingPlanPOJO;
@@ -72,6 +73,7 @@ public class LearningFragment extends Fragment {
         }else {
             token = getArguments().getString("token");
         }
+
         }
 
     @Override
@@ -82,13 +84,13 @@ public class LearningFragment extends Fragment {
         View liView = inflater.inflate(R.layout.fragment_learning, container, false);
         listView = (RecyclerView) liView.findViewById(R.id.list_view_recycle);
         getActivity().setTitle("Обучение");
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
-        if (mPrefs.contains("userInfo")) {
-            Gson gson = new Gson();
-            String json = mPrefs.getString("userInfo", "");
-            UserPOJO obj = gson.fromJson(json, UserPOJO.class);
-
-        }
+//        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
+//        if (mPrefs.contains("userInfo")) {
+//            Gson gson = new Gson();
+//            String json = mPrefs.getString("userInfo", "");
+//            UserPOJO obj = gson.fromJson(json, UserPOJO.class);
+//
+//        }
 
 //        ProgressBar learningProgressBar = (ProgressBar) listView.findViewById(R.id.progressBar);
 //        learningProgressBar.setProgress(Integer.valueOf(getArguments().getString("progress")));

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,14 @@ public class FrgGoalsTarget extends FrgGoalsParent {
 
 
 
+    public final String money="destiny";
+
     public FrgGoalsTarget() {
         // Required empty public constructor
     }
-
+    public String getMoney() {
+        return money;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,9 +71,21 @@ public class FrgGoalsTarget extends FrgGoalsParent {
         }
         return list;
     }
-    public void addNewGoals() {
-        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
-        setUpRecyclerView();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            Log.d("******","target");
+        }
+    }
+    public void addNewGoals(String goal) {
+        if(getUserVisibleHint()) {
+            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
+            setUpRecyclerView();
+        }else{
+            Log.d("******","it is not visible");
+        }
     }
 }
 

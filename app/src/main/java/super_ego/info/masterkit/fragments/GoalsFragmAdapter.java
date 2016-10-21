@@ -77,15 +77,12 @@ public  class GoalsFragmAdapter extends RecyclerView.Adapter {
     }
 
 
-    public void addNewGoal(String[] newgoal){
-        newgoal = new String[]{"testadd2","testadd"};
-        if (newgoal.length > 0) {
-            for (int i =0; i < newgoal.length; i++) {
-                list.add(newgoal[i]);
+    public void addNewGoal(String newgoal){
+
+                list.add(newgoal);
                 notifyItemInserted(list.size() - 1);
-            }
-            lastInsertedIndex = lastInsertedIndex + newgoal.length;
-        }
+            lastInsertedIndex = lastInsertedIndex + 1;
+
 
     }
 

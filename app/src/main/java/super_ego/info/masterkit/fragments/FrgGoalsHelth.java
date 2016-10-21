@@ -3,6 +3,7 @@ package super_ego.info.masterkit.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FrgGoalsHelth extends FrgGoalsParent {
 
+
+    public final String body="body";
     public FrgGoalsHelth() {
     }
-
+    public String getBody() {
+        return body;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +64,21 @@ public class FrgGoalsHelth extends FrgGoalsParent {
         }
         return list;
     }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
-    public void addNewGoals() {
-        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(new String[]{});
-        setUpRecyclerView();
+        if (isVisibleToUser) {
+            Log.d("******","health");
+        }
+    }
+    public void addNewGoals(String goal) {
+        if(getUserVisibleHint()) {
+            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
+            setUpRecyclerView();
+        }else{
+            Log.d("******","it is not visible");
+        }
     }
 
 
