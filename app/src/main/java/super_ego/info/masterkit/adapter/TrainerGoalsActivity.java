@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import super_ego.info.masterkit.R;
@@ -32,6 +33,8 @@ public class TrainerGoalsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        int count = getIntent().getIntExtra("Target",0);
+        Log.d("TrainerGoalsActivity", "Пункт по которому кликнули" + count);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
         fragmentManager.beginTransaction().replace(R.id.frgmTrainerFrame, trainerGoalsMainFragment).commit();
