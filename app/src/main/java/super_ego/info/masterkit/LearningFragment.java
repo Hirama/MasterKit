@@ -9,11 +9,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 
@@ -89,7 +89,15 @@ public class LearningFragment extends Fragment {
         View liView = inflater.inflate(R.layout.fragment_learning, container, false);
         listView = (RecyclerView) liView.findViewById(R.id.list_view_recycle);
         getActivity().setTitle("Обучение");
-        Toolbar toolbar = (Toolbar) liView.findViewById(R.id.toolbar_main);
+        Button goToGoals = (Button) liView.findViewById(R.id.my_goals_button);
+        goToGoals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoalsFragment goalsFragment = new GoalsFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.frgmContMain, goalsFragment).commit();
+            }
+        });
         //Your toolbar is now an action bar and you can use it like you always do, for example:
 //        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
 //        if (mPrefs.contains("userInfo")) {
