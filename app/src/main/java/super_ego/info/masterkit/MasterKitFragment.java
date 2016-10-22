@@ -2,18 +2,17 @@ package super_ego.info.masterkit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +30,6 @@ import java.util.concurrent.ExecutionException;
 import super_ego.info.masterkit.adapter.ItemClickSupport;
 import super_ego.info.masterkit.adapter.RecycleViewAdapterMasterKit;
 import super_ego.info.masterkit.fragments.GoalYouTubePlayer;
-import super_ego.info.masterkit.fragments.learning_fragment.LearningStepFragment;
-import super_ego.info.masterkit.model.UserPOJO;
 import super_ego.info.masterkit.model.VideoDataPOJO;
 import super_ego.info.masterkit.model.VideoModel;
 import super_ego.info.masterkit.model.YouTubeVideoPOJO;
@@ -62,57 +59,77 @@ public class MasterKitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View liView = inflater.inflate(R.layout.fragment_master_kit, container, false);
+        ImageView imageView = (ImageView) liView.findViewById(R.id.imageView);
+
         videoList = (RecyclerView) liView.findViewById(R.id.video_recycle_view);
-        TextView videoTitleMain = (TextView) liView.findViewById(R.id.textViewVideoTitleMain);
+        final TextView videoTitleMain = (TextView) liView.findViewById(R.id.textViewVideoTitleMain);
         TextView videoDateMain = (TextView) liView.findViewById(R.id.textViewVideoTimeStamp);
         getActivity().setTitle("Master Kit Live");
 
+
         mLayoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager.HORIZONTAL, false);
         videoList.setLayoutManager(mLayoutManager);
-        String token="";
+        String token = "";
         SharedPreferences mPrefs = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("user")) {
-            token=mPrefs.getString("user","");
+            token = mPrefs.getString("user", "");
         }
-        YouTubeVideoPOJO youTubeVideoPOJO=null;
-        GetVideoInfo getVideoInfo= new GetVideoInfo(token);
+        YouTubeVideoPOJO youTubeVideoPOJO = null;
+        GetVideoInfo getVideoInfo = new GetVideoInfo(token);
         try {
-            youTubeVideoPOJO=getVideoInfo.execute().get();
+            youTubeVideoPOJO = getVideoInfo.execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         final List<VideoModel> records = new ArrayList<>();
-        List<VideoDataPOJO> videoDataPOJOs =youTubeVideoPOJO.getData().getHistory();
+        List<VideoDataPOJO> videoDataPOJOs = youTubeVideoPOJO.getData().getHistory();
 
-        VideoDataPOJO videoDataPOJOLast= youTubeVideoPOJO.getData().getLast();
+        final VideoDataPOJO videoDataPOJOLast = youTubeVideoPOJO.getData().getLast();
 
         videoTitleMain.setText(videoDataPOJOLast.getTitle());
         videoDateMain.setText(videoDataPOJOLast.getSubtitle());
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragManager = getActivity().getSupportFragmentManager();
+                GoalYouTubePlayer goalYouTubePlayer = new GoalYouTubePlayer(videoDataPOJOLast.getVideo());
 
-       for(VideoDataPOJO i:videoDataPOJOs){
-           VideoModel videoModelhistory = new VideoModel();
-           videoModelhistory.setDate(i.getSubtitle());
-           videoModelhistory.setName(i.getTitle());
-           videoModelhistory.setImage(R.mipmap.small_video);
-           videoModelhistory.setVideoId(i.getVideo());
-           records.add(videoModelhistory);
-       }
+                fragManager.beginTransaction()
+                        .replace(R.id.frgmContMain, goalYouTubePlayer)
+                        .addToBackStack(null)
+                        .commit();
+
+            }
+        });
+
+
+        for (VideoDataPOJO i : videoDataPOJOs) {
+            VideoModel videoModelhistory = new VideoModel();
+            videoModelhistory.setDate(i.getSubtitle());
+            videoModelhistory.setName(i.getTitle());
+            videoModelhistory.setImage(R.mipmap.small_video);
+            videoModelhistory.setVideoId(i.getVideo());
+            records.add(videoModelhistory);
+        }
 
         mAdapter = new RecycleViewAdapterMasterKit(records);
         ItemClickSupport.addTo(videoList)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Toast.makeText(getContext(),"Text!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Text!", Toast.LENGTH_SHORT).show();
                         Log.d("WOW SUCH WORK", String.valueOf(position));
                         FragmentManager fragManager = getActivity().getSupportFragmentManager();
-                        VideoModel videoModel=records.get(position);
+                        VideoModel videoModel = records.get(position);
                         GoalYouTubePlayer goalYouTubePlayer = new GoalYouTubePlayer(videoModel.getVideoId());
 
-                        fragManager.beginTransaction().replace(R.id.frgmCont, goalYouTubePlayer).commit();
+                        fragManager.beginTransaction()
+                                .replace(R.id.frgmContMain, goalYouTubePlayer)
+                                .addToBackStack(null)
+                                .commit();
                     }
                 });
         videoList.setAdapter(mAdapter);

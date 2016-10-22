@@ -6,9 +6,21 @@
     <FrameLayout
         android:id="@+id/youtube_layout_learning_step"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:visibility="visible" />
+
+    <TextView
+        android:text="Методика в жизни"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewMasterKitVideoName"
+        android:layout_below="@id/youtube_layout_learning_step"
+        android:textAllCaps="true"
+        android:layout_marginLeft="10dp"
+        android:textStyle="normal|bold"
+        android:textColor="@color/color_selector_navigation_item1"
+        android:layout_marginTop="10dp" />
 
 
 </RelativeLayout>

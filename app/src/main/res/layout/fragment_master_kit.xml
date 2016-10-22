@@ -19,9 +19,10 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="165dp"
         android:background="@drawable/mklive_img"
-        android:scaleType="center" />
+        android:scaleType="center"
+        android:layout_height="200dp"
+        android:clickable="true" />
 
     <TextView
         android:id="@+id/textViewVideoTitleMain"

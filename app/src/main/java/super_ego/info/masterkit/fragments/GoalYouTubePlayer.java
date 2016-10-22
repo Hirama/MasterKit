@@ -24,6 +24,10 @@ public class GoalYouTubePlayer extends android.support.v4.app.Fragment {
     public static final String API_KEY = "AIzaSyDVDCkSRgCsB3vnv8_s5FWeC1lOAYvtBZo";
     public String VIDEO_ID;
 
+    public GoalYouTubePlayer(){
+    }
+
+
     public GoalYouTubePlayer(String videoId){
         this.VIDEO_ID=videoId;
     }
