@@ -53,7 +53,7 @@ public class FrgGoalsLove extends FrgGoalsParent {
 
     @Override
     protected List getGoalsServer() {
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("goal", MODE_PRIVATE);
         if (mPrefs.contains("goals")) {
             list = new ArrayList<>();
             Gson gson = new Gson();

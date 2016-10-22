@@ -2,9 +2,12 @@ package super_ego.info.masterkit;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -24,7 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import super_ego.info.masterkit.adapter.ItemClickSupport;
 import super_ego.info.masterkit.adapter.RecycleViewAdapterMasterKit;
+import super_ego.info.masterkit.fragments.GoalYouTubePlayer;
+import super_ego.info.masterkit.fragments.learning_fragment.LearningStepFragment;
 import super_ego.info.masterkit.model.UserPOJO;
 import super_ego.info.masterkit.model.VideoDataPOJO;
 import super_ego.info.masterkit.model.VideoModel;
@@ -76,7 +83,7 @@ public class MasterKitFragment extends Fragment {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        List<VideoModel> records = new ArrayList<>();
+        final List<VideoModel> records = new ArrayList<>();
         List<VideoDataPOJO> videoDataPOJOs =youTubeVideoPOJO.getData().getHistory();
 
         VideoDataPOJO videoDataPOJOLast= youTubeVideoPOJO.getData().getLast();
@@ -93,8 +100,24 @@ public class MasterKitFragment extends Fragment {
            videoModelhistory.setVideoId(i.getVideo());
            records.add(videoModelhistory);
        }
+
         mAdapter = new RecycleViewAdapterMasterKit(records);
+        ItemClickSupport.addTo(videoList)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Toast.makeText(getContext(),"Text!",Toast.LENGTH_SHORT).show();
+                        Log.d("WOW SUCH WORK", String.valueOf(position));
+                        FragmentManager fragManager = getActivity().getSupportFragmentManager();
+                        VideoModel videoModel=records.get(position);
+                        GoalYouTubePlayer goalYouTubePlayer = new GoalYouTubePlayer(videoModel.getVideoId());
+
+                        fragManager.beginTransaction().replace(R.id.frgmCont, goalYouTubePlayer).commit();
+                    }
+                });
         videoList.setAdapter(mAdapter);
+
+
         return liView;
     }
 

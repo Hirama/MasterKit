@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment;
@@ -75,28 +76,40 @@ public class FrgGoalsMoney extends FrgGoalsParent {
 
     @Override
     protected List getGoalsServer() {
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("goal", MODE_PRIVATE);
         if (mPrefs.contains("goals")) {
             list = new ArrayList<>();
             Gson gson = new Gson();
             String json = mPrefs.getString("goals", "");
-            Log.d("**********",json);
+            //Log.d("**********",json);
             GoalResultPOJO obj = gson.fromJson(json, GoalResultPOJO.class);
             GoalSectionPOJO goalSectionPOJO = obj.getData();
             for (GoalsPOJO i : goalSectionPOJO.getMoney()) {
 
                 list.add(i.getTitle());
-
             }
-
         }
+        //}
         return list;
     }
 
-    public void addNewGoals() {
-        ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal("sfsdf");
-        setUpRecyclerView();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser) {
+            Log.d("******", "Money");
+        }
     }
 
+    public void addNewGoals(String goal) {
+        if (getUserVisibleHint()) {
+            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
+            setUpRecyclerView();
+        } else {
+            Log.d("******", "it is not visible");
 
+
+        }
+    }
 }

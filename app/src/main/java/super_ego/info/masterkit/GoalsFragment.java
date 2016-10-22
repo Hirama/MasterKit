@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,10 +47,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GoalsFragment extends Fragment {
     private Toolbar toolbar;
+
     private TabLayout tabLayout;
     private CustomViewPager viewPager;
     private Fragment mCurrentFragment;
-    private String token;
+//    private String token;
     Button btnAddGoal;
     FrgGoalsParent frgGoalsParent = new FrgGoalsParent();
     ////////!!!!!!!!!!!!!1
@@ -71,11 +73,7 @@ public class GoalsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences mPrefs = getActivity().getSharedPreferences("data", MODE_PRIVATE);
-        if (mPrefs.contains("user")) {
-            token=mPrefs.getString("user","");
 
-        }
 
     }
 
@@ -99,11 +97,21 @@ public class GoalsFragment extends Fragment {
 
                 new GoalsFrgDialog().show(getActivity().getSupportFragmentManager(),
                         "login");
-
-                //MainActivity.GetGoals getGoals= new MainActivity.GetGoals(token);
+//                SharedPreferences mPrefs = getActivity().getSharedPreferences("goal", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = myPrefs.edit();
+//                editor.clear();
+//                editor.apply();
+//                if (mPrefs.contains("user")) {
+//                    String token=mPrefs.getString("user","");
+//                    MainActivity outer = new MainActivity();
+//                    outer.new GetGoals(token)
+//                            .execute();
+//                }
             }
         };
         btnAddGoal.setOnClickListener(oclBtn);
+
+
         return v;
     }
 
@@ -117,22 +125,28 @@ public class GoalsFragment extends Fragment {
 
 
     private void setupViewPager(ViewPager viewPager) {
-        GoalsFragment.ViewPagerAdapter adapter = new GoalsFragment.ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
-        adapter.addFrag(frgGoalsMoney, "Money");
-        adapter.addFrag(frgGoalsLove, "Love");
-        adapter.addFrag(frgGoalsTarget, "Target");
-        adapter.addFrag(frgGoalsHelth, "Helth");
+        List<Fragment> pages= new ArrayList<>();
+        GoalsFragment.ViewPagerAdapter adapter = new GoalsFragment.ViewPagerAdapter(getActivity().getSupportFragmentManager(),pages);
+        pages.add(frgGoalsMoney);
+        adapter.notifyDataSetChanged();
+        pages.add(frgGoalsLove);
+        adapter.notifyDataSetChanged();
+        pages.add(frgGoalsTarget);
+        adapter.notifyDataSetChanged();
+        pages.add(frgGoalsHelth);
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+        private List<Fragment> mFragmentList ;
 
-        public ViewPagerAdapter(FragmentManager manager) {
+
+        public ViewPagerAdapter(FragmentManager manager, List<Fragment> pages) {
             super(manager);
+            this.mFragmentList=pages;
         }
 
         @Override
@@ -146,20 +160,19 @@ public class GoalsFragment extends Fragment {
             return mFragmentList.size();
         }
 
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-        public List<Fragment> getmFragmentList(){
-            return mFragmentList;
-        }
+
         @Override
-        public CharSequence getPageTitle(int position) {
-            // return null to display only the icon
-            return null;
+        public int getItemPosition(Object object) {
+            int index = mFragmentList.indexOf (object);
+
+            if (index == -1)
+                return POSITION_NONE;
+            else
+                return index;
         }
 
     }
+
 
 }
 

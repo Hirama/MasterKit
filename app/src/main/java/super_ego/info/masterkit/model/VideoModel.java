@@ -1,10 +1,13 @@
 package super_ego.info.masterkit.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Andrey on 20.10.2016.
  */
 
-public class VideoModel {
+public class VideoModel  {
     String date;
     String name;
     int image;
@@ -41,4 +44,6 @@ public class VideoModel {
     public void setVideoId(String videoId) {
         this.videoId = videoId;
     }
+
+
 }

@@ -8,7 +8,9 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -237,12 +239,16 @@ public class MainActivity extends AppCompatActivity
             finish(); // close this activity and return to preview activity (if there is any)
         }
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    public void switchContent(int id, Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(id, fragment, fragment.toString());
+        ft.addToBackStack(null);
+        ft.commit();
+    }
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -343,7 +349,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public class GetGoals extends AsyncTask<Void, Void, GoalResultPOJO> {
+        public class GetGoals extends AsyncTask<Void, Void, GoalResultPOJO> {
 
 
         private final String value;
@@ -385,8 +391,6 @@ public class MainActivity extends AppCompatActivity
             } catch (IOException e) {
                 return null;
             }
-
-
         }
 
         @Override
@@ -395,20 +399,18 @@ public class MainActivity extends AppCompatActivity
                 super.onPostExecute(token);
                 Gson gson = new Gson();
                 String json = gson.toJson(token);
-                SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
+                Log.d("*********Ishladi",json);
+                SharedPreferences mPrefs = getSharedPreferences("goal", MODE_PRIVATE);
                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
                 prefsEditor.putString("goals", json);
-                prefsEditor.commit();
+                prefsEditor.apply();
 
             }
 
             //  }
 
         }
-        @Override
-        protected void onCancelled () {
 
-        }
     }
 
 
