@@ -98,7 +98,8 @@
                 android:id="@+id/learning_level_text"
                 android:layout_weight="0.98"
                 android:textAlignment="center"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
 
             <TextView
                 android:text="3"
@@ -107,7 +108,8 @@
                 android:id="@+id/user_level_text"
                 android:layout_weight="1.07"
                 android:textAlignment="center"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -124,7 +126,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:text="Уровень"
@@ -134,7 +136,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:textAllCaps="true"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <ProgressBar

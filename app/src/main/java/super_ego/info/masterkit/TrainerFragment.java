@@ -33,9 +33,6 @@ public class TrainerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View liView = inflater.inflate(R.layout.fragment_trainer, container, false);
-
-        Toolbar toolbar = (Toolbar) liView.findViewById(R.id.toolbar_trainer);
-        setSupportActionBar(toolbar);
         getActivity().setTitle("Тренажёр");
 
         TabLayout tabLayout = (TabLayout) liView.findViewById(R.id.tab_layout_fragment_trainer);

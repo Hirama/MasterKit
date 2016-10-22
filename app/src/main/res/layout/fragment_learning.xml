@@ -28,20 +28,10 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:foreground="?selectableItemBackground"
             android:layout_marginLeft="20dp">
-
-            <ProgressBar
-                android:id="@+id/learning_progress_bar_fragment"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/circle_shape"
-                android:max="100"
-                android:progress="60"
-                android:progressDrawable="@drawable/circular_progress_bar" />
 
             <TextView
                 android:id="@+id/textView_percent_circle"
@@ -51,8 +41,20 @@
                 android:layout_centerVertical="true"
                 android:text="60%"
                 android:textColor="@color/text_color_button"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:textStyle="normal|bold" />
+
+            <ProgressBar
+                android:id="@+id/learning_progress_bar_fragment"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_shape"
+                android:max="100"
+                android:progress="60"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="56dp" />
         </RelativeLayout>
 
         <LinearLayout
