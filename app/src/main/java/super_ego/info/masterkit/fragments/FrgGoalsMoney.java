@@ -2,6 +2,7 @@ package super_ego.info.masterkit.fragments;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +23,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.adapter.TrainerGoalsActivity;
 import super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.GoalSectionPOJO;
@@ -61,12 +64,16 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             public void onItemClick(RecyclerView recyclerView, View itemView,
                                     int position) {
                 Log.d("+++++++++++++++++", "sss" + position);
-                TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
-                android.support.v4.app.FragmentTransaction fTrans;
-                fTrans = getFragmentManager().beginTransaction();
-                fTrans.replace(R.id.frgmContMain, trainerGoalsMainFragment);
-                fTrans.addToBackStack("trainerGoals");
-                fTrans.commit();
+
+
+                Intent intent = new Intent(getActivity(), TrainerGoalsActivity.class);
+                startActivity(intent);
+//                TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
+//                android.support.v4.app.FragmentTransaction fTrans;
+//                fTrans = getFragmentManager().beginTransaction();
+//                fTrans.replace(R.id.frgmContMain, trainerGoalsMainFragment);
+//                fTrans.addToBackStack("trainerGoals");
+//                fTrans.commit();
                 //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, trainerGoalsMainFragment).commit();
 
             }

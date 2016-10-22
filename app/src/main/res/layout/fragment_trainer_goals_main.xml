@@ -30,7 +30,8 @@
         android:background="?attr/colorButtonNormal"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="58dp">
 
         <TextView
             android:id="@+id/textView"
