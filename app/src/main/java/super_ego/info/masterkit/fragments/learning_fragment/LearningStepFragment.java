@@ -24,15 +24,16 @@ public class LearningStepFragment extends android.support.v4.app.Fragment {
     //https://www.youtube.com/watch?v=<VIDEO_ID>
     public static final String VIDEO_ID = "XALLZHKnS_U";
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.learning_video_step_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.you_tube_api, container, false);
         getActivity().setTitle("Обучение");
 
         YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
 
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.youtube_layout_learning_step, youTubePlayerFragment).commit();
+        transaction.add(R.id.youtube_layout, youTubePlayerFragment).commit();
 
         youTubePlayerFragment.initialize(API_KEY, new YouTubePlayer.OnInitializedListener() {
 
@@ -47,7 +48,6 @@ public class LearningStepFragment extends android.support.v4.app.Fragment {
 
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult error) {
-                // YouTube error
                 String errorMessage = error.toString();
                 Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
                 Log.d("errorMessage:", errorMessage);

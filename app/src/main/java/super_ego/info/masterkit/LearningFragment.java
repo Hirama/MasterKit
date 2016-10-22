@@ -9,11 +9,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -48,8 +48,8 @@ public class LearningFragment extends Fragment {
     public RecyclerView.Adapter mAdapter;
     RecyclerView listView;
     String token;
-    private RecyclerView.LayoutManager mLayoutManager;
     LearningStepFragment learningStepFragment = new LearningStepFragment();
+    private RecyclerView.LayoutManager mLayoutManager;
     private FragmentActivity myContext;
 
     public LearningFragment() {
@@ -89,6 +89,8 @@ public class LearningFragment extends Fragment {
         View liView = inflater.inflate(R.layout.fragment_learning, container, false);
         listView = (RecyclerView) liView.findViewById(R.id.list_view_recycle);
         getActivity().setTitle("Обучение");
+        Toolbar toolbar = (Toolbar) liView.findViewById(R.id.toolbar_main);
+        //Your toolbar is now an action bar and you can use it like you always do, for example:
 //        SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data",MODE_PRIVATE);
 //        if (mPrefs.contains("userInfo")) {
 //            Gson gson = new Gson();
@@ -119,11 +121,14 @@ public class LearningFragment extends Fragment {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Toast.makeText(getContext(),"Text!",Toast.LENGTH_SHORT).show();
                         Log.d("WOW SUCH WORK", String.valueOf(position));
                         FragmentManager fragManager = getActivity().getSupportFragmentManager();
                         LearningStepFragment learningStepFragment = new LearningStepFragment();
-                        fragManager.beginTransaction().replace(R.id.frgmCont, learningStepFragment).commit();
+                        fragManager.popBackStack();
+                        fragManager.beginTransaction()
+                                .replace(R.id.frgmContMain, learningStepFragment, "tube")
+                                .addToBackStack(null)
+                                .commit();
                     }
                 });
         listView.setAdapter(mAdapter);
@@ -145,7 +150,7 @@ public class LearningFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        myContext=(FragmentActivity) context;
+        myContext = (FragmentActivity) context;
         super.onAttach(context);
 
     }

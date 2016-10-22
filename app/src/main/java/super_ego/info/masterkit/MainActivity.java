@@ -1,6 +1,5 @@
 package super_ego.info.masterkit;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,8 +34,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
-
-
 import super_ego.info.masterkit.login.LoginActivity;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.UserPOJO;
@@ -48,18 +44,26 @@ public class MainActivity extends AppCompatActivity
     private UserGetData userDataTask = null;
     private UserPOJO newUser;
     public FragmentManager fragmentManager = getSupportFragmentManager();
+    public static DrawerLayout drawer;
+    public static Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        LearningFragment learningFragment = new LearningFragment();
-        fragmentManager.beginTransaction().add(R.id.frgmCont, learningFragment).commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        LearningFragment learningFragment = new LearningFragment();
+        fragmentManager.beginTransaction().add(R.id.frgmContMain, learningFragment).commit();
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -159,26 +163,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Вы действительно хотите закрыть приложение?")
-                    .setCancelable(false)
-                    .setPositiveButton("Да", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            MainActivity.this.finish();
-                        }
-                    })
-                    .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START);
+//        } else {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage("Вы действительно хотите закрыть приложение?")
+//                    .setCancelable(false)
+//                    .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            MainActivity.this.finish();
+//                        }
+//                    })
+//                    .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//            AlertDialog alert = builder.create();
+//            alert.show();
+//        }
+
+        // Otherwise defer to system default behavior.
+        super.onBackPressed();
     }
 
     @Override
@@ -211,20 +218,23 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.learning) {
             LearningFragment learningFragment = new LearningFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmCont, learningFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, learningFragment).addToBackStack(null).commit();
 
         } else if (id == R.id.training) {
             TrainerFragment trainerFragment = new TrainerFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmCont, trainerFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, trainerFragment).commit();
 
         } else if (id == R.id.master_kit) {
             MasterKitFragment masterKitFragment = new MasterKitFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmCont, masterKitFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, masterKitFragment).commit();
 
         } else if (id == R.id.goals) {
             GoalsFragment goalsFragment = new GoalsFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmCont, goalsFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, goalsFragment).commit();
 
+        }
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
         }
 
 

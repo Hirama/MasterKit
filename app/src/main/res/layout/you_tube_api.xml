@@ -3,11 +3,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/youtube_layout"
+    <TextView
+        android:text="Пройдено 1/8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible" />
+        android:id="@+id/textViewStepAchieveVideo"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp" />
+
+    <FrameLayout
+        android:id="@+id/youtube_layout"
+        android:layout_below="@id/textViewStepAchieveVideo"
+        android:layout_height="200dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:accessibilityLiveRegion="polite"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:text="Шаг 1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/youtube_layout"
+        android:id="@+id/textViewVideoStep"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:text="Как поставить цели"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewNameofStep"
+        android:layout_below="@id/textViewVideoStep"
+        android:layout_marginTop="8dp"
+        android:textAllCaps="true"
+        android:layout_marginLeft="16dp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/black" />
 
 </RelativeLayout>

@@ -27,12 +27,9 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/learning_activity_name" />
-        <activity android:name=".LearnActivity" />
-        <activity android:name=".MasterActivity"
-            android:label="@string/master_activity_name"/>
-        <activity android:name=".GoalsActivity"
-            android:label="@string/goals_activity_name">
-        </activity>
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity" />
     </application>
 
 </manifest>
