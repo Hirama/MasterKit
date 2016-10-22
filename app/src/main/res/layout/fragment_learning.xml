@@ -1,85 +1,87 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="super_ego.info.masterkit.LearningFragment"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:layout_marginTop="?attr/actionBarSize"
+    android:foreground="?selectableItemBackground"
+    tools:context="super_ego.info.masterkit.LearningFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/main_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:id="@+id/main_info"
-        android:baselineAligned="false"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_marginTop="18dp"
+        android:baselineAligned="false"
+        android:foreground="?selectableItemBackground"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:foreground="?selectableItemBackground"
             android:layout_marginLeft="20dp">
 
             <ProgressBar
-                style="@android:style/Widget.ProgressBar.Horizontal"
                 android:id="@+id/learning_progress_bar_fragment"
-                android:progressDrawable="@drawable/circular_progress_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/circle_shape"
                 android:max="100"
                 android:progress="60"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:progressDrawable="@drawable/circular_progress_bar" />
 
             <TextView
                 android:id="@+id/textView_percent_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:text="60%"
                 android:textColor="@color/text_color_button"
                 android:textSize="14sp"
-                android:textStyle="normal|bold"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:textStyle="normal|bold" />
         </RelativeLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:foreground="?selectableItemBackground"
             android:layout_weight="1"
-            android:layout_marginLeft="18dp">
+            android:orientation="vertical">
 
             <TextView
-                android:text="Активность"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/textView_activity"
-                android:textAllCaps="true"
-                android:textStyle="normal|bold"
-                android:textSize="12sp"
-                android:textColor="@color/activity_tesxt_color" />
-
-            <TextView
-                android:text="Так держать! Поднажми!"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Активность"
+                android:textAllCaps="true"
+                android:textColor="@color/activity_tesxt_color"
+                android:textSize="12sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
                 android:id="@+id/textView_doit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Так держать! Поднажми!"
                 android:textAllCaps="true"
                 android:textSize="12sp" />
 
             <Button
-                android:text="Продолжить обучение"
+                android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:id="@+id/button"
+                android:layout_marginRight="@dimen/fab_margin"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/rounded_button_continue_learning"
+                android:text="Продолжить обучение"
                 android:textColor="@color/text_color_button"
-                android:layout_marginRight="@dimen/fab_margin"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -87,45 +89,59 @@
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/steps_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/steps_info"
         android:layout_below="@+id/main_info"
-        android:layout_marginTop="18dp">
+        android:layout_marginTop="18dp"
+        android:foreground="?selectableItemBackground"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
-                android:text="На сегодня"
+                android:id="@+id/on_today_button"
                 android:layout_width="wrap_content"
                 android:layout_height="54dp"
-                android:id="@+id/on_today_button"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_button_continue_learning"
+                android:text="На сегодня"
                 android:textColor="@color/text_color_button" />
 
             <Button
-                android:text="Мои цели"
+                android:id="@+id/my_goals_button"
                 android:layout_width="wrap_content"
                 android:layout_height="54dp"
-                android:id="@+id/my_goals_button"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_button_continue_learning"
+                android:text="Мои цели"
                 android:textColor="@color/text_color_button_opacity_20"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:onClick="logout"/>
         </LinearLayout>
 
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_view_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
         android:layout_below="@id/steps_info"
-        android:id="@+id/list_view_recycle"
-        tools:listitem="@layout/learning_list_item" />
+        android:foreground="?selectableItemBackground"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/learning_list_item"
+        android:clickable="true" />
+
+    <FrameLayout
+        android:id="@+id/fragment_learning_conteiner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:foreground="?selectableItemBackground"
+        android:layout_alignParentStart="true">
+    </FrameLayout>
 
 </RelativeLayout>

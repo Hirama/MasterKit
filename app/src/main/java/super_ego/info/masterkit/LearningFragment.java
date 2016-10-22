@@ -5,11 +5,15 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -21,12 +25,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-
 import super_ego.info.masterkit.adapter.DividerItemDecoration;
+import super_ego.info.masterkit.adapter.ItemClickSupport;
 import super_ego.info.masterkit.adapter.RecyclerViewAdapterLearning;
+import super_ego.info.masterkit.fragments.learning_fragment.LearningStepFragment;
 import super_ego.info.masterkit.model.LearingPlanPOJO;
 import super_ego.info.masterkit.model.MaterialsPOJO;
-import super_ego.info.masterkit.model.UserPOJO;
 import super_ego.info.masterkit.util.RestUrl;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -41,10 +45,12 @@ import static android.content.Context.MODE_PRIVATE;
  * create an instance of this fragment.
  */
 public class LearningFragment extends Fragment {
+    public RecyclerView.Adapter mAdapter;
     RecyclerView listView;
     String token;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    LearningStepFragment learningStepFragment = new LearningStepFragment();
+    private FragmentActivity myContext;
 
     public LearningFragment() {
         // Required empty public constructor
@@ -60,8 +66,7 @@ public class LearningFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static LearningFragment newInstance(String param1, String param2) {
-        LearningFragment fragment = new LearningFragment();
-        return fragment;
+        return new LearningFragment();
     }
 
     @Override
@@ -69,12 +74,12 @@ public class LearningFragment extends Fragment {
         super.onCreate(savedInstanceState);
         SharedPreferences mPrefs = this.getActivity().getSharedPreferences("data", 0);
         if (mPrefs.contains("user")) {
-            token=mPrefs.getString("user", "");
-        }else {
+            token = mPrefs.getString("user", "");
+        } else {
             token = getArguments().getString("token");
         }
 
-        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,35 +107,45 @@ public class LearningFragment extends Fragment {
         List<MaterialsPOJO> records = null;
         try {
             records = populateRecords();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
 
         // specify an adapter (see also next example)
         mAdapter = new RecyclerViewAdapterLearning(records);
+
+        ItemClickSupport.addTo(listView)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Toast.makeText(getContext(),"Text!",Toast.LENGTH_SHORT).show();
+                        Log.d("WOW SUCH WORK", String.valueOf(position));
+                        FragmentManager fragManager = getActivity().getSupportFragmentManager();
+                        LearningStepFragment learningStepFragment = new LearningStepFragment();
+                        fragManager.beginTransaction().replace(R.id.frgmCont, learningStepFragment).commit();
+                    }
+                });
         listView.setAdapter(mAdapter);
         return liView;
     }
 
     private List<MaterialsPOJO> populateRecords() throws ExecutionException, InterruptedException {
-            GetLearningPlan plan = new GetLearningPlan(token);
-            LearingPlanPOJO learningPlan=null;
-            try {
-                learningPlan=plan.execute().get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+        GetLearningPlan plan = new GetLearningPlan(token);
+        LearingPlanPOJO learningPlan = null;
+        try {
+            learningPlan = plan.execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        assert learningPlan != null;
         return learningPlan.getResult();
 
     }
 
     @Override
     public void onAttach(Context context) {
+        myContext=(FragmentActivity) context;
         super.onAttach(context);
 
     }

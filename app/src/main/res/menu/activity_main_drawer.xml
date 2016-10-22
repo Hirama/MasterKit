@@ -24,15 +24,5 @@
             android:title="@string/goals_activity_name" />
     </group>
 
-    <item android:title="@string/awareness_title_with_percent" android:id="@+id/awareness_percent">
-        <menu>
-            <item
-                android:id="@+id/continue_learning"
-                android:icon="@drawable/ic_continue"
-                android:title="@string/continue_learning_menu_item" />
-        </menu>
-    </item>
-
-
 </menu>
 

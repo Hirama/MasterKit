@@ -59,7 +59,7 @@ public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerVi
     /**
      * Реализация класса ViewHolder, хранящего ссылки на виджеты.
      */
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView_desciption_step;
         private TextView textView_step;
         private ImageButton imageButton;

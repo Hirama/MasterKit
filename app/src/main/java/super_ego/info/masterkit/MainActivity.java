@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private UserGetData userDataTask = null;
     private UserPOJO newUser;
-    private FragmentManager fragmentManager = getSupportFragmentManager();
+    public FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
