@@ -13,7 +13,8 @@
         android:id="@+id/textViewDateVideo"
         android:textSize="12sp"
         android:textAllCaps="true"
-        android:textColor="@color/color_navigation_list_background" />
+        android:textColor="@color/color_navigation_list_background"
+        android:keepScreenOn="true" />
 
     <TextView
         android:text="Методика в жизни"
@@ -24,7 +25,9 @@
         android:textStyle="normal|bold"
         android:textColor="@color/color_selector_navigation_item1"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="10dp"
+        android:maxLines="1"
+        android:maxLength="22" />
 
     <ImageView
         android:layout_width="match_parent"
