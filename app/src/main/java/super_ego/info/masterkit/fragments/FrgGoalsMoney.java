@@ -63,10 +63,11 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             @Override
             public void onItemClick(RecyclerView recyclerView, View itemView,
                                     int position) {
-                Log.d("+++++++++++++++++", "sss" + position);
-
+                Log.d("то что тебе нужно бобур", "sss" + position);
+                Log.d("название цели", "sss" + list.get(position));
 
                 Intent intent = new Intent(getActivity(), TrainerGoalsActivity.class);
+                intent.putExtra("Target", position);
                 startActivity(intent);
 //                TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
 //                android.support.v4.app.FragmentTransaction fTrans;
