@@ -27,7 +27,7 @@ public class LearningStepFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.learning_video_step_fragment, container, false);
-        getActivity().setTitle("SFASDFASDF");
+        getActivity().setTitle("Обучение");
 
         YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
 
