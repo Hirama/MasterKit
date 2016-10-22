@@ -64,7 +64,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
                 TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
                 android.support.v4.app.FragmentTransaction fTrans;
                 fTrans = getFragmentManager().beginTransaction();
-                fTrans.replace(R.id.frgmCont, trainerGoalsMainFragment);
+                fTrans.replace(R.id.frgmContMain, trainerGoalsMainFragment);
                 fTrans.addToBackStack("trainerGoals");
                 fTrans.commit();
                 //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, trainerGoalsMainFragment).commit();

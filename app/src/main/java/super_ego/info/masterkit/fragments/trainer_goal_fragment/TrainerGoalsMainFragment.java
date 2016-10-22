@@ -55,7 +55,7 @@ public class TrainerGoalsMainFragment extends Fragment {
         }
     }
 
-    boolean flag = true;
+    boolean flag = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
