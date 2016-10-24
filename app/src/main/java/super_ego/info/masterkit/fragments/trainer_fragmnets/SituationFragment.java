@@ -3,17 +3,20 @@ package super_ego.info.masterkit.fragments.trainer_fragmnets;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.adapter.DividerItemDecoration;
+import super_ego.info.masterkit.adapter.ItemClickSupport;
 import super_ego.info.masterkit.adapter.RecycleViewAdapterSituationFragment;
 import super_ego.info.masterkit.model.TempModel;
 
@@ -74,6 +77,19 @@ public class SituationFragment extends Fragment {
 
         // specify an adapter (see also next example)
         RecyclerView.Adapter mAdapter = new RecycleViewAdapterSituationFragment(records);
+        ItemClickSupport.addTo(listView)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Toast.makeText(getContext(), "WOW SUCH WORK!", Toast.LENGTH_SHORT).show();
+                        FragmentManager fragManager = getActivity().getSupportFragmentManager();
+                        StepSituationFragment stepSituationFragment = new StepSituationFragment();
+                        fragManager.beginTransaction()
+                                .replace(R.id.frgmContMain, stepSituationFragment)
+//                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
         listView.setAdapter(mAdapter);
 
         return fragmentView;

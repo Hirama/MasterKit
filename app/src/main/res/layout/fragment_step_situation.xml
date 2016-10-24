@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+    <TextView
+        android:id="@+id/textViewTopStepSituationFragment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingTop="10dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textAllCaps="true" />
+
+    <EditText
+        android:id="@+id/editTextStepSituationAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTopStepSituationFragment"
+        android:ems="10"
+        android:hint="Ваш ответ"
+        android:inputType="text"
+        android:text="На"
+        android:textColor="?android:attr/colorForeground"
+        android:maxLines="10"
+        android:minHeight="179dp"
+        android:textAlignment="viewStart"
+        android:gravity="top|center_vertical" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.27" />
+
+        <Button
+            android:id="@+id/buttonNextSituationFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/video_title_text_color"
+            android:text="Далее"
+            android:textAlignment="center"
+            android:weightSum="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_weight="0.73" />
+    </LinearLayout>
+
+</RelativeLayout>

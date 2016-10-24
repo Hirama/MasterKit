@@ -1,0 +1,78 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment">
+
+    <TextView
+        android:id="@+id/textViewTopUniversal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:text="Смотрим образ"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:text="Some text from bobur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTopUniversal"
+        android:id="@+id/textViewTopUniversalComplitText"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp" />
+
+    <ImageButton
+        android:id="@+id/imgBtnPlayUniversal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTopUniversalComplitText"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent_button"
+        app:srcCompat="@drawable/playbutton"
+        android:layout_marginTop="60dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextBotStepUniversalFragment"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:hint="Ваш ответ"
+        android:layout_below="@id/imgBtnPlayUniversal"
+        android:textColor="?android:attr/textColorTertiary"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="10dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.27" />
+
+        <Button
+            android:id="@+id/buttonNextSituationFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/video_title_text_color"
+            android:text="Далее"
+            android:textAlignment="center"
+            android:weightSum="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_weight="0.73"
+            android:elevation="0dp" />
+    </LinearLayout>
+
+</RelativeLayout>
