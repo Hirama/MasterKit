@@ -1,15 +1,35 @@
 package super_ego.info.masterkit.fragments.trainer_goal_fragment;
 
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
+
 import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.model.AudioGoal;
+import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.util.RestUrl;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class TrainerGoalsMainFragment extends Fragment {
@@ -24,7 +44,9 @@ public class TrainerGoalsMainFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
+    private boolean playPause;
+    private MediaPlayer mediaPlayer;
+    private boolean intialStage = true;
     public TrainerGoalsMainFragment() {
     }
 
@@ -65,20 +87,51 @@ public class TrainerGoalsMainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_trainer_goals_main, container, false);
         imageButton = (ImageButton) view.findViewById(R.id.imgBtnPlay);
         //((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        String token="";
+        SharedPreferences mPrefs = getActivity().getSharedPreferences("data", MODE_PRIVATE);
+        if (mPrefs.contains("user")) {
+            token = mPrefs.getString("user", "");
 
+        }
+        GetAudioGoals getAudioGoals = new GetAudioGoals(token,"72296");
+        AudioGoal audioGoal=null;
+        try {
+            audioGoal=getAudioGoals.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        final String audioLink=audioGoal.getData().getMp3();
+        Log.d("*****",audioLink);
         imageButton.setOnClickListener(new View.OnClickListener()
 
                                        {
                                            public void onClick(View v) {
-                                               if (flag)
+                                               if (flag) {
                                                    imageButton.setImageResource(R.drawable.playbutton);
-                                               else
+                                                   if (mediaPlayer.isPlaying())
+                                                       mediaPlayer.pause();
+                                                   flag=true;
+                                               }
+                                               else {
                                                    imageButton.setImageResource(R.drawable.pausebutton);
-                                               flag = !flag;
+                                                   if (intialStage)
+                                                       new Player()
+                                                               .execute("https://super-ego.info"+audioLink);
+                                                   else {
+                                                       if (!mediaPlayer.isPlaying())
+                                                           mediaPlayer.start();
+                                                   }
+                                                   flag = !flag;
+                                               }
                                            }
                                        }
 
         );
+
         return view;
     }
 
@@ -93,6 +146,131 @@ public class TrainerGoalsMainFragment extends Fragment {
     public void onButtonPressed(Uri uri) {
 
     }
+    class Player extends AsyncTask<String, Void, Boolean> {
+        private ProgressDialog progress;
 
+        @Override
+        protected Boolean doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            Boolean prepared;
+            try {
+
+                mediaPlayer.setDataSource(params[0]);
+
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        // TODO Auto-generated method stub
+                        intialStage = true;
+                        flag=false;
+                        imageButton.setBackgroundResource(R.drawable.playbutton);
+                        mediaPlayer.stop();
+                        mediaPlayer.reset();
+                    }
+                });
+                mediaPlayer.prepare();
+                prepared = true;
+            } catch (IllegalArgumentException e) {
+                // TODO Auto-generated catch block
+                Log.d("IllegarArgument", e.getMessage());
+                prepared = false;
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                prepared = false;
+                e.printStackTrace();
+            }
+            return prepared;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            // TODO Auto-generated method stub
+            super.onPostExecute(result);
+
+            Log.d("Prepared", "//" + result);
+            mediaPlayer.start();
+
+            intialStage = false;
+        }
+
+
+    }
+    @Override
+    public void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        if (mediaPlayer != null) {
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+    public class GetAudioGoals extends AsyncTask<Void, Void, AudioGoal> {
+
+
+        private final String value;
+        private String goal_id;
+        public GetAudioGoals(String token,String goalAudioId) {
+            this.value = token;
+            this.goal_id=goalAudioId;
+        }
+
+        @Override
+        protected AudioGoal doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+
+
+            final String baseurl = RestUrl.BASE_URL + "v1/training/get-training?id=2&uri=purpose&goal_id=" +goal_id+ "&access-token=" + value;
+            HttpURLConnection httpURLConnection;
+            BufferedReader bufferedReader = null;
+            StringBuilder stringBuilder = null;
+            String line = null;
+            URL url = null;
+            String response = null;
+            try {
+                url = new URL(baseurl);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+
+                bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                stringBuilder = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + '\n');
+                }
+                // Response from server after login process will be stored in response variable.
+                response = stringBuilder.toString();
+
+                // You can perform UI operations here
+
+                Gson gson = new Gson();
+                return gson.fromJson(response, AudioGoal.class);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final AudioGoal token) {
+            if (token != null) {
+                super.onPostExecute(token);
+               // Log.d("*********",token.getData().getMp3());
+            }
+
+            //  }
+
+        }
+
+    }
 
 }

@@ -34,13 +34,17 @@ public class FrgGoalsParent extends Fragment {
     ArrayAdapter<String> adapter;
     ListView listGoalsLove;
     List<String> list;
+    List<String> goalsId;
     RecyclerView mRecyclerView;
 
     protected List getGoalsServer() {
         list = new ArrayList<>();
         return list;
     }
-
+    protected List getGoalsId(){
+        goalsId= new ArrayList<>();
+        return list;
+    }
 //    public void setListGoalsServer(String[] massGoalsFromServer) {
 //        list.clear();
 //        Collections.addAll(this.list, massGoalsFromServer);

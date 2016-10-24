@@ -29,7 +29,18 @@
             android:label="@string/learning_activity_name" />
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity" />
+            android:value=".MainActivity"
+            />
+        <activity
+            android:name=".adapter.TrainerGoalsActivity"
+            android:label="@string/title_activity_trainer_goals"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="super_ego.info.masterkit.MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>
