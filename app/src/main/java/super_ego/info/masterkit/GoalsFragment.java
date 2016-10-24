@@ -1,13 +1,10 @@
 package super_ego.info.masterkit;
 
 
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -17,32 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.gson.Gson;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import javax.net.ssl.HttpsURLConnection;
-
-import super_ego.info.masterkit.RESTapi.SetGoalToAPI;
 import super_ego.info.masterkit.fragments.FrgGoalsHelth;
 import super_ego.info.masterkit.fragments.FrgGoalsLove;
 import super_ego.info.masterkit.fragments.FrgGoalsMoney;
 import super_ego.info.masterkit.fragments.FrgGoalsParent;
 import super_ego.info.masterkit.fragments.FrgGoalsTarget;
 import super_ego.info.masterkit.fragments.GoalsFrgDialog;
-import super_ego.info.masterkit.model.GoalResultPOJO;
-import super_ego.info.masterkit.model.LearingPlanPOJO;
-import super_ego.info.masterkit.util.RestUrl;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class GoalsFragment extends Fragment {
@@ -51,7 +31,7 @@ public class GoalsFragment extends Fragment {
     private TabLayout tabLayout;
     private CustomViewPager viewPager;
     private Fragment mCurrentFragment;
-//    private String token;
+    //    private String token;
     Button btnAddGoal;
     FrgGoalsParent frgGoalsParent = new FrgGoalsParent();
     ////////!!!!!!!!!!!!!1
@@ -59,9 +39,9 @@ public class GoalsFragment extends Fragment {
     FrgGoalsHelth frgGoalsHelth = new FrgGoalsHelth();
     FrgGoalsLove frgGoalsLove = new FrgGoalsLove();
     FrgGoalsTarget frgGoalsTarget = new FrgGoalsTarget();
-////////////////////////!!!!!!!!!!!!1
+    ////////////////////////!!!!!!!!!!!!1
     private int[] tabIcons = {
-            R.drawable.goal_money,
+            R.drawable.goal_money_select,
             R.drawable.goal_love,
             R.drawable.goal_target,
             R.drawable.goal_helth
@@ -126,27 +106,67 @@ public class GoalsFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
 
-        List<Fragment> pages= new ArrayList<>();
-        GoalsFragment.ViewPagerAdapter adapter = new GoalsFragment.ViewPagerAdapter(getActivity().getSupportFragmentManager(),pages);
+        List<Fragment> pages = new ArrayList<>();
+        GoalsFragment.ViewPagerAdapter adapter = new GoalsFragment.ViewPagerAdapter(getActivity().getSupportFragmentManager(), pages);
         pages.add(frgGoalsMoney);
         adapter.notifyDataSetChanged();
+        frgGoalsMoney.setMainFragment(this);
         pages.add(frgGoalsLove);
         adapter.notifyDataSetChanged();
+        frgGoalsLove.setMainFragment(this);
         pages.add(frgGoalsTarget);
         adapter.notifyDataSetChanged();
+        frgGoalsTarget.setMainFragment(this);
         pages.add(frgGoalsHelth);
         adapter.notifyDataSetChanged();
+        frgGoalsHelth.setMainFragment(this);
         viewPager.setAdapter(adapter);
     }
+    public void changeIconTabs(String s) {
+        switch (s) {
+            case "helth":
+                tabIcons[0] = R.drawable.goal_money;
+                tabIcons[1] = R.drawable.goal_love;
+                tabIcons[2] = R.drawable.goal_target;
+                tabIcons[3] = R.drawable.goal_helth_select;
+                Log.d("GoalsFragment","threre helth");
+                setupTabIcons();
+                break;
+            case "target":
+                tabIcons[0] = R.drawable.goal_money;
+                tabIcons[1] = R.drawable.goal_love;
+                tabIcons[2] = R.drawable.goal_target_select;
+                tabIcons[3] = R.drawable.goal_helth;
+                Log.d("GoalsFragment","threre target");
+                setupTabIcons();
+                break;
+            case "love":
+                tabIcons[0] = R.drawable.goal_money;
+                tabIcons[1] = R.drawable.goal_love_select;
+                tabIcons[2] = R.drawable.goal_target;
+                tabIcons[3] = R.drawable.goal_helth;
+                Log.d("GoalsFragment","threre love");
+                setupTabIcons();
+                break;
+            case "money":
+                tabIcons[0] = R.drawable.goal_money_select;
+                tabIcons[1] = R.drawable.goal_love;
+                tabIcons[2] = R.drawable.goal_target;
+                tabIcons[3] = R.drawable.goal_helth;
+                Log.d("GoalsFragment","threre love");
+                setupTabIcons();
+                break;
 
+        }
+    }
     class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-        private List<Fragment> mFragmentList ;
+        private List<Fragment> mFragmentList;
 
 
         public ViewPagerAdapter(FragmentManager manager, List<Fragment> pages) {
             super(manager);
-            this.mFragmentList=pages;
+            this.mFragmentList = pages;
         }
 
         @Override
@@ -163,16 +183,17 @@ public class GoalsFragment extends Fragment {
 
         @Override
         public int getItemPosition(Object object) {
-            int index = mFragmentList.indexOf (object);
+            int index = mFragmentList.indexOf(object);
 
             if (index == -1)
                 return POSITION_NONE;
             else
                 return index;
+
         }
 
-    }
 
+    }
 
 }
 

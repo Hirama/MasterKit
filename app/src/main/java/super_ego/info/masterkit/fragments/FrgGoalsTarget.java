@@ -1,6 +1,7 @@
 package super_ego.info.masterkit.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +19,9 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import super_ego.info.masterkit.GoalsFragment;
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.adapter.TrainerGoalsActivity;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.GoalSectionPOJO;
 import super_ego.info.masterkit.model.GoalsPOJO;
@@ -31,7 +34,7 @@ public class FrgGoalsTarget extends FrgGoalsParent {
 
 
     public final String money="destiny";
-
+    private GoalsFragment goalsFragment;
     public FrgGoalsTarget() {
         // Required empty public constructor
     }
@@ -50,8 +53,34 @@ public class FrgGoalsTarget extends FrgGoalsParent {
         getGoalsServer();
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
         setUpRecyclerView();
+        mRecyclerView.addOnItemTouchListener(new RecyclerClickListener(getContext()) {
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
+            @Override
+            public void onItemClick(RecyclerView recyclerView, View itemView,
+                                    int position) {
+                Log.d("то что тебе нужно бобур", "sss" + position);
+                Log.d("название цели", "sss" + list.get(position));
+
+                Intent intent = new Intent(getActivity(), TrainerGoalsActivity.class);
+                intent.putExtra("Target", position);
+                startActivity(intent);
+//                TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
+//                android.support.v4.app.FragmentTransaction fTrans;
+//                fTrans = getFragmentManager().beginTransaction();
+//                fTrans.replace(R.id.frgmContMain, trainerGoalsMainFragment);
+//                fTrans.addToBackStack("trainerGoals");
+//                fTrans.commit();
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frgmCont, trainerGoalsMainFragment).commit();
+
+            }
+        });
         return v;
     }
+
 
     @Override
     protected List getGoalsServer() {
@@ -77,6 +106,7 @@ public class FrgGoalsTarget extends FrgGoalsParent {
 
         if (isVisibleToUser) {
             Log.d("******","target");
+           this.goalsFragment.changeIconTabs("target");
         }
     }
     public void addNewGoals(String goal) {
@@ -86,6 +116,9 @@ public class FrgGoalsTarget extends FrgGoalsParent {
         }else{
             Log.d("******","it is not visible");
         }
+    }
+    public void setMainFragment(GoalsFragment goalsFragment){
+        this.goalsFragment = goalsFragment;
     }
 }
 

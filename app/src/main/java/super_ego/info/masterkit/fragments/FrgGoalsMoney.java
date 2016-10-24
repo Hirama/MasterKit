@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import super_ego.info.masterkit.GoalsFragment;
 import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.adapter.TrainerGoalsActivity;
@@ -36,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FrgGoalsMoney extends FrgGoalsParent {
 
-
+    private GoalsFragment goalsFragment;
     public FrgGoalsMoney() {
     }
 
@@ -60,6 +61,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
 
             }
 
+
             @Override
             public void onItemClick(RecyclerView recyclerView, View itemView,
                                     int position) {
@@ -80,6 +82,10 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             }
         });
         return v;
+    }
+
+    public void setMainFragment(GoalsFragment goalsFragment){
+        this.goalsFragment = goalsFragment;
     }
 
     @Override
@@ -107,6 +113,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
 
         if (isVisibleToUser) {
             Log.d("******", "Money");
+          this.goalsFragment.changeIconTabs("money");
         }
     }
 
@@ -120,4 +127,5 @@ public class FrgGoalsMoney extends FrgGoalsParent {
 
         }
     }
+
 }
