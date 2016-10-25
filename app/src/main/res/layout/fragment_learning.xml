@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:foreground="?selectableItemBackground"
     tools:context="super_ego.info.masterkit.LearningFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:foreground="?selectableItemBackground"
         android:layout_alignParentStart="true">
     </FrameLayout>
 
@@ -21,9 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_info"
-        android:layout_marginTop="18dp"
-        android:foreground="?selectableItemBackground"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@android:color/background_light"
+        android:paddingTop="17dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,29 +51,20 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_view_recycle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/steps_info"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/learning_list_item" />
-
     <LinearLayout
         android:id="@+id/main_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
         android:baselineAligned="false"
-        android:foreground="?selectableItemBackground"
         android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/background_light"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:paddingTop="17dp">
 
         <RelativeLayout
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:foreground="?selectableItemBackground"
             android:layout_marginLeft="20dp">
 
             <TextView
@@ -108,7 +97,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
-            android:foreground="?selectableItemBackground"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -145,5 +133,13 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list_view_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/steps_info"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/learning_list_item" />
 
 </RelativeLayout>
