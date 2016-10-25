@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.adapter.DividerItemDecoration;
-import super_ego.info.masterkit.adapter.ItemClickSupport;
 import super_ego.info.masterkit.adapter.RecyclerViewAdapterLearning;
 import super_ego.info.masterkit.fragments.learning_fragment.LearningStepFragment;
 import super_ego.info.masterkit.model.LearingPlanPOJO;
@@ -123,22 +121,22 @@ public class LearningFragment extends Fragment {
 
 
         // specify an adapter (see also next example)
-        mAdapter = new RecyclerViewAdapterLearning(records);
+        mAdapter = new RecyclerViewAdapterLearning(records, this);
 
-        ItemClickSupport.addTo(listView)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.d("WOW SUCH WORK", String.valueOf(position));
-                        FragmentManager fragManager = getActivity().getSupportFragmentManager();
-                        LearningStepFragment learningStepFragment = new LearningStepFragment();
-                        fragManager.popBackStack();
-                        fragManager.beginTransaction()
-                                .replace(R.id.frgmContMain, learningStepFragment, "tube")
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                });
+//        ItemClickSupport.addTo(listView)
+//                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+//                        Log.d("WOW SUCH WORK", String.valueOf(position));
+//                        FragmentManager fragManager = getActivity().getSupportFragmentManager();
+//                        LearningStepFragment learningStepFragment = new LearningStepFragment();
+//                        fragManager.popBackStack();
+//                        fragManager.beginTransaction()
+//                                .replace(R.id.frgmContMain, learningStepFragment, "tube")
+//                                .addToBackStack(null)
+//                                .commit();
+//                    }
+//                });
         listView.setAdapter(mAdapter);
         return liView;
     }

@@ -4,7 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:weightSum="1"
-    android:foreground="?selectableItemBackground">
+    android:id="@+id/steRelativeLayoutItem">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -58,13 +58,5 @@
 
 
     </LinearLayout>
-
-    <!--<ListView-->
-        <!--android:id="@+id/listView1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:divider="#FFCC00"-->
-        <!--android:dividerHeight="2dp"-->
-        <!--android:layout_weight="1" />-->
 
 </RelativeLayout>
