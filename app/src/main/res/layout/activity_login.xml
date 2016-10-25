@@ -6,16 +6,23 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/loginImage_full"
+    <!--<android.support.v7.widget.AppCompatImageView-->
+        <!--android:id="@+id/loginImage_full"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--android:scaleType="centerCrop"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:contentDescription="@string/loginimage"-->
+        <!--app:srcCompat="@mipmap/bg_loginhd"-->
+        <!--tools:ignore="MissingPrefix"/>-->
+
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:adjustViewBounds="true"
-        android:scaleType="center"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/loginimage"
-        app:srcCompat="@mipmap/bg_loginhd"
-        tools:ignore="MissingPrefix"/>
+        android:id="@+id/imageViewLogin"
+        android:scaleType="centerCrop"
+        app:srcCompat="@mipmap/bg_loginhd" />
 
     <LinearLayout
         android:layout_width="match_parent"
