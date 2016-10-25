@@ -1,16 +1,22 @@
 package super_ego.info.masterkit.adapter;
 
+import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 import java.util.Objects;
 
+import super_ego.info.masterkit.LearningFragment;
 import super_ego.info.masterkit.R;
+import super_ego.info.masterkit.fragments.learning_fragment.LearningStepFragment;
 import super_ego.info.masterkit.model.MaterialsPOJO;
 
 /**
@@ -19,9 +25,11 @@ import super_ego.info.masterkit.model.MaterialsPOJO;
 
 public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerViewAdapterLearning.ViewHolder> {
     private List<MaterialsPOJO> records;
+    private LearningFragment mContext;
 
-    public RecyclerViewAdapterLearning(List<MaterialsPOJO> records) {
+    public RecyclerViewAdapterLearning(List<MaterialsPOJO> records, LearningFragment context) {
         this.records = records;
+        this.mContext = context;
     }
 
     /**
@@ -30,6 +38,9 @@ public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.learning_list_item, viewGroup, false);
+        if (records.get(i).getStatus().equals("locked")){
+            viewGroup.setActivated(true);
+        }
         return new ViewHolder(v);
     }
 
@@ -40,14 +51,45 @@ public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         MaterialsPOJO record = records.get(i);
         viewHolder.textView_desciption_step.setText(record.getTitle());
-        String stepNumber = "ШАГ " + record.getStep().toString();
+        final String stepNumber = "ШАГ " + record.getStep().toString();
         viewHolder.textView_step.setText(stepNumber);
         if (Objects.equals(record.getStatus(), "locked")) {
             viewHolder.imageButton.setImageResource(R.drawable.ic_lock_outline_black_24dp);
+            viewHolder.layoutInflater.setClickable(false);
+            viewHolder.layoutInflater.setSelected(true);
+            viewHolder.layoutInflater.setFocusable(false);
         } else if (Objects.equals(record.getStatus(), "active")) {
             viewHolder.imageButton.setImageResource(R.drawable.ic_arrow_forward_black_24dp);
+            viewHolder.layoutInflater.setBackgroundColor(Color.WHITE);
+            viewHolder.layoutInflater.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("ACTIVE", "CLICKABLE");
+                    FragmentManager fragManager = mContext.getActivity().getSupportFragmentManager();
+                    LearningStepFragment learningStepFragment = new LearningStepFragment();
+                    fragManager.popBackStack();
+                    fragManager.beginTransaction()
+                            .replace(R.id.frgmContMain, learningStepFragment, "tube")
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         } else if (Objects.equals(record.getStatus(), "passed")) {
             viewHolder.imageButton.setImageResource(R.drawable.ic_done_black_24dp);
+            viewHolder.layoutInflater.setBackgroundColor(Color.WHITE);
+            viewHolder.layoutInflater.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("PASSED", "CLICKABLE");
+                    FragmentManager fragManager = mContext.getActivity().getSupportFragmentManager();
+                    LearningStepFragment learningStepFragment = new LearningStepFragment();
+                    fragManager.popBackStack();
+                    fragManager.beginTransaction()
+                            .replace(R.id.frgmContMain, learningStepFragment, "tube")
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
     }
 
@@ -63,12 +105,14 @@ public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerVi
         private TextView textView_desciption_step;
         private TextView textView_step;
         private ImageButton imageButton;
+        private RelativeLayout layoutInflater;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView_step = (TextView) itemView.findViewById(R.id.textView_step);
             textView_desciption_step = (TextView) itemView.findViewById(R.id.textView_desciption_step);
             imageButton = (ImageButton) itemView.findViewById(R.id.learning_step_status_image_button);
+            layoutInflater = (RelativeLayout) itemView.findViewById(R.id.steRelativeLayoutItem);
         }
     }
 }

@@ -58,10 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/steps_info"
-        android:foreground="?selectableItemBackground"
         android:scrollbars="vertical"
-        tools:listitem="@layout/learning_list_item"
-        android:clickable="true" />
+        tools:listitem="@layout/learning_list_item" />
 
     <LinearLayout
         android:id="@+id/main_info"
