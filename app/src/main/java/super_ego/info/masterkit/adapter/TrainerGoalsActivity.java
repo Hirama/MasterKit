@@ -1,5 +1,6 @@
 package super_ego.info.masterkit.adapter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -33,10 +34,13 @@ public class TrainerGoalsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        int count = getIntent().getIntExtra("Target",0);
-        Log.d("TrainerGoalsActivity", "Пункт по которому кликнули" + count);
+        String count = getIntent().getStringExtra("Target");
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("goalId", count);
+        trainerGoalsMainFragment.setArguments(bundle);
         fragmentManager.beginTransaction().replace(R.id.frgmTrainerFrame, trainerGoalsMainFragment).commit();
     }
 

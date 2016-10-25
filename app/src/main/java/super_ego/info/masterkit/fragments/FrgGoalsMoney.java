@@ -65,11 +65,9 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             @Override
             public void onItemClick(RecyclerView recyclerView, View itemView,
                                     int position) {
-                Log.d("то что тебе нужно бобур", "sss" + position);
-                Log.d("название цели", "sss" + list.get(position));
 
                 Intent intent = new Intent(getActivity(), TrainerGoalsActivity.class);
-                intent.putExtra("Target", position);
+                intent.putExtra("Target", list.get(position));
                 startActivity(intent);
 //                TrainerGoalsMainFragment trainerGoalsMainFragment = new TrainerGoalsMainFragment();
 //                android.support.v4.app.FragmentTransaction fTrans;
@@ -112,7 +110,6 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-            Log.d("******", "Money");
           this.goalsFragment.changeIconTabs("money");
         }
     }
@@ -122,8 +119,6 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             ((GoalsFragmAdapter) mRecyclerView.getAdapter()).addNewGoal(goal);
             setUpRecyclerView();
         } else {
-            Log.d("******", "it is not visible");
-
 
         }
     }

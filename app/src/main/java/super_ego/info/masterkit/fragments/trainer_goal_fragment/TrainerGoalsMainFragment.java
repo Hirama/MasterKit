@@ -8,11 +8,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -21,12 +23,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.model.AudioGoal;
 import super_ego.info.masterkit.model.GoalResultPOJO;
+import super_ego.info.masterkit.model.GoalSectionPOJO;
+import super_ego.info.masterkit.model.GoalsPOJO;
 import super_ego.info.masterkit.util.RestUrl;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -35,7 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class TrainerGoalsMainFragment extends Fragment {
 
     ImageButton imageButton;
-
+    TextView goalText;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -95,7 +100,22 @@ public class TrainerGoalsMainFragment extends Fragment {
             token = mPrefs.getString("user", "");
 
         }
-        GetAudioGoals getAudioGoals = new GetAudioGoals(token,"72296");
+        String goalName = getArguments().getString("goalId");
+        Integer goalId=0;
+        SharedPreferences goalDetailCache = this.getActivity().getSharedPreferences("goal", MODE_PRIVATE);
+        if (goalDetailCache.contains("goals")) {
+
+            Gson gson = new Gson();
+            String json = goalDetailCache.getString("goals", "");
+            GoalResultPOJO obj = gson.fromJson(json, GoalResultPOJO.class);
+            GoalSectionPOJO goalSectionPOJO = obj.getData();
+            for (GoalsPOJO i : goalSectionPOJO.getMoney()) {
+                if(i.getTitle().equals(goalName)){
+                    goalId=i.getId();
+                }
+            }
+        }
+        GetAudioGoals getAudioGoals = new GetAudioGoals(token,String.valueOf(goalId));
         AudioGoal audioGoal=null;
         try {
             audioGoal=getAudioGoals.execute().get();
@@ -105,7 +125,12 @@ public class TrainerGoalsMainFragment extends Fragment {
             e.printStackTrace();
         }
         final String audioLink=audioGoal.getData().getMp3();
-        Log.d("*****",audioLink);
+        String replaceBreaks=audioGoal.getData().getText();
+        replaceBreaks=replaceBreaks.replaceAll("\n","");
+        replaceBreaks = replaceBreaks.trim().replaceAll(" +", " ");
+        goalText = (TextView) view.findViewById(R.id.textView2);
+        goalText.setText(Html.fromHtml(replaceBreaks));
+
         imageButton.setOnClickListener(new View.OnClickListener()
 
                                        {
@@ -264,7 +289,7 @@ public class TrainerGoalsMainFragment extends Fragment {
         protected void onPostExecute(final AudioGoal token) {
             if (token != null) {
                 super.onPostExecute(token);
-               // Log.d("*********",token.getData().getMp3());
+
             }
 
             //  }

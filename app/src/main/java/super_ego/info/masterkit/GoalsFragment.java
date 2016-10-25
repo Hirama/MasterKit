@@ -129,7 +129,6 @@ public class GoalsFragment extends Fragment {
                 tabIcons[1] = R.drawable.goal_love;
                 tabIcons[2] = R.drawable.goal_target;
                 tabIcons[3] = R.drawable.goal_helth_select;
-                Log.d("GoalsFragment","threre helth");
                 setupTabIcons();
                 break;
             case "target":
@@ -137,7 +136,7 @@ public class GoalsFragment extends Fragment {
                 tabIcons[1] = R.drawable.goal_love;
                 tabIcons[2] = R.drawable.goal_target_select;
                 tabIcons[3] = R.drawable.goal_helth;
-                Log.d("GoalsFragment","threre target");
+
                 setupTabIcons();
                 break;
             case "love":
@@ -145,7 +144,7 @@ public class GoalsFragment extends Fragment {
                 tabIcons[1] = R.drawable.goal_love_select;
                 tabIcons[2] = R.drawable.goal_target;
                 tabIcons[3] = R.drawable.goal_helth;
-                Log.d("GoalsFragment","threre love");
+
                 setupTabIcons();
                 break;
             case "money":
@@ -153,7 +152,7 @@ public class GoalsFragment extends Fragment {
                 tabIcons[1] = R.drawable.goal_love;
                 tabIcons[2] = R.drawable.goal_target;
                 tabIcons[3] = R.drawable.goal_helth;
-                Log.d("GoalsFragment","threre love");
+
                 setupTabIcons();
                 break;
 
