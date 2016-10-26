@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity
     public static DrawerLayout drawer;
     public static Toolbar toolbar;
 
+//    int idFragment=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         }
         LearningFragment learningFragment = new LearningFragment();
         fragmentManager.beginTransaction().add(R.id.frgmContMain, learningFragment).commit();
-
+        Log.d("TRACE:MAINACTIVITY", "TestLog");
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -105,7 +107,19 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+/*
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("idFragment", idFragment);
+        Log.d("TRACE:MAINACTIVITY", "onSaveInstanceState"+idFragment);
+    }
 
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        idFragment = savedInstanceState.getInt("idFragment");
+        Log.d("MAINACTIVITY", "onRestoreInstanceState"+idFragment);
+    }
+*/
     private void setUserName() {
         try {
             newUser = userDataTask.execute((Void) null).get();
@@ -220,20 +234,23 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.learning) {
             LearningFragment learningFragment = new LearningFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmContMain, learningFragment).addToBackStack(null).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, learningFragment).addToBackStack("LearningFragment").commit();
+           // this.idFragment=0;
 
         } else if (id == R.id.training) {
             TrainerFragment trainerFragment = new TrainerFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmContMain, trainerFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, trainerFragment).addToBackStack("TrainerFragment").commit();
+          //  this.idFragment=1;
 
         } else if (id == R.id.master_kit) {
             MasterKitFragment masterKitFragment = new MasterKitFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmContMain, masterKitFragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, masterKitFragment).addToBackStack("MasterKitFragment").commit();
+         //   this.idFragment=2;
 
         } else if (id == R.id.goals) {
             GoalsFragment goalsFragment = new GoalsFragment();
-            fragmentManager.beginTransaction().replace(R.id.frgmContMain, goalsFragment).commit();
-
+            fragmentManager.beginTransaction().replace(R.id.frgmContMain, goalsFragment).addToBackStack("GoalsFragment").commit();
+          //  this.idFragment=3;
         }
         if (item.getItemId() == android.R.id.home) {
             finish(); // close this activity and return to preview activity (if there is any)

@@ -3,7 +3,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="button_undo">UNDO</string>
+    <string name="button_undo">РЕДАКТИРОВАТЬ</string>
     <string name="menu_checkbox_undo">Undo</string>
     <string name="menu_add_5_items">Add 5 items</string>
     <string name="action_settings">Settings</string>

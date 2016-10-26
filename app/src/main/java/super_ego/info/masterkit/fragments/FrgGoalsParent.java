@@ -41,12 +41,6 @@ public class FrgGoalsParent extends Fragment {
         return list;
     }
 
-//    public void setListGoalsServer(String[] massGoalsFromServer) {
-//        list.clear();
-//        Collections.addAll(this.list, massGoalsFromServer);
-//
-//        adapter.notifyDataSetChanged();
-//    }
 
     protected void createAdapterAndListView(View v, int listGoal) {
         listGoalsLove = (ListView) v.findViewById(listGoal);
@@ -131,6 +125,7 @@ public class FrgGoalsParent extends Fragment {
                 GoalsFragmAdapter adapter = (GoalsFragmAdapter) mRecyclerView.getAdapter();
                 boolean undoOn = adapter.isUndoOn();
                 if (undoOn) {
+                    Log.d("FrgGoalsParent","swipedPosition"+swipedPosition);
                     adapter.pendingRemoval(swipedPosition);
                 } else {
                     adapter.remove(swipedPosition);

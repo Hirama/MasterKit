@@ -1,33 +1,21 @@
 package super_ego.info.masterkit.fragments;
 
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import super_ego.info.masterkit.GoalsFragment;
-import super_ego.info.masterkit.MainActivity;
 import super_ego.info.masterkit.R;
 import super_ego.info.masterkit.adapter.TrainerGoalsActivity;
-import super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment;
 import super_ego.info.masterkit.model.GoalResultPOJO;
 import super_ego.info.masterkit.model.GoalSectionPOJO;
 import super_ego.info.masterkit.model.GoalsPOJO;
@@ -93,7 +81,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
             list = new ArrayList<>();
             Gson gson = new Gson();
             String json = mPrefs.getString("goals", "");
-            //Log.d("**********",json);
+
             GoalResultPOJO obj = gson.fromJson(json, GoalResultPOJO.class);
             GoalSectionPOJO goalSectionPOJO = obj.getData();
             for (GoalsPOJO i : goalSectionPOJO.getMoney()) {
