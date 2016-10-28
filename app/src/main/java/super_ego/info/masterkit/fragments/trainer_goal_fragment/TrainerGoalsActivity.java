@@ -22,7 +22,7 @@ public class TrainerGoalsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trainer_goals);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        this.setTitle("Тренажёр");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

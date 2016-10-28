@@ -47,7 +47,7 @@ public class SituationFragment extends Fragment {
         listView.setLayoutManager(mLayoutManager);
         listView.addItemDecoration(new DividerItemDecoration(this.getActivity(), LinearLayoutManager.VERTICAL));
         //Populate some list
-
+        getActivity().setTitle("Тренажёр");
         TempModel tempModel = new TempModel();
         tempModel.setName("Ситуация");
         tempModel.setImageId(R.drawable.situation);

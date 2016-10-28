@@ -30,7 +30,7 @@ public class GoalsFrgDialogEdit extends DialogFragment implements
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         editText = (EditText) form.findViewById(R.id.editText);
 
-        return(builder.setTitle("Отедактируйте Цель").setView(form)
+        return(builder.setTitle("Отредактируйте Цель").setView(form)
                 .setPositiveButton(android.R.string.ok, this)
                 .setNegativeButton(android.R.string.cancel, null).create());
 
@@ -51,22 +51,17 @@ public class GoalsFrgDialogEdit extends DialogFragment implements
                   if (i.getClass().getName().contains("Money")) {
                       FrgGoalsMoney frgGoalsMoney = (FrgGoalsMoney) i;
                       Log.d("**********", "you are in " + newGoal);
-//                      SetGoalToAPI setMoneyGoal= new SetGoalToAPI(token,newGoal,"money");
-//                      setMoneyGoal.execute();
-                      frgGoalsMoney.addNewGoals("newGoal");
+                      frgGoalsMoney.editGoals("newGoal");
+
                   } else if (i.getClass().getName().contains("Love")) {
-//                      SetGoalToAPI setMoneyGoal= new SetGoalToAPI(token,newGoal,"relationship");
-//                      setMoneyGoal.execute();
                       FrgGoalsLove frgGoalsLove = (FrgGoalsLove) i;
                       frgGoalsLove.addNewGoals(newGoal);
+
                   } else if (i.getClass().getName().contains("Target")) {
-//                      SetGoalToAPI setMoneyGoal= new SetGoalToAPI(token,newGoal,"destiny");
-//                      setMoneyGoal.execute();
                       FrgGoalsTarget frgGoalsTarget = (FrgGoalsTarget) i;
                       frgGoalsTarget.addNewGoals(newGoal);
+
                   } else if (i.getClass().getName().contains("Helth")) {
-//                      SetGoalToAPI setMoneyGoal= new SetGoalToAPI(token,newGoal,"body");
-//                      setMoneyGoal.execute();
                       FrgGoalsHelth frgGoalsHelth = (FrgGoalsHelth) i;
                       frgGoalsHelth.addNewGoals(newGoal);
                   }
@@ -81,12 +76,35 @@ public class GoalsFrgDialogEdit extends DialogFragment implements
 
     @Override
     public void onDismiss(DialogInterface unused) {
-        super.onDismiss(unused);
+        this.onCancel(unused);
     }
 
     @Override
     public void onCancel(DialogInterface unused) {
         super.onCancel(unused);
+        List<Fragment> fragments=getActivity().getSupportFragmentManager().getFragments();
+        for(Fragment i:fragments){
+            if(i!=null){
+                if(i.getUserVisibleHint()) {
+                    if (i.getClass().getName().contains("Money")) {
+                        FrgGoalsMoney frgGoalsMoney = (FrgGoalsMoney) i;
+                        frgGoalsMoney.setUpRecyclerView();
+                    } else if (i.getClass().getName().contains("Love")) {
+                        FrgGoalsLove frgGoalsLove = (FrgGoalsLove) i;
+                        frgGoalsLove.setUpRecyclerView();
+                    } else if (i.getClass().getName().contains("Target")) {
+                        FrgGoalsTarget frgGoalsTarget = (FrgGoalsTarget) i;
+                        frgGoalsTarget.setUpRecyclerView();
+                    } else if (i.getClass().getName().contains("Helth")) {
+                        FrgGoalsHelth frgGoalsHelth = (FrgGoalsHelth) i;
+                        frgGoalsHelth.setUpRecyclerView();
+                    }
+                }
+            }
+            else {
+                Toast.makeText(getActivity(), "Ошибка при добавлении", Toast.LENGTH_SHORT);
+            }
+        }
     }
 
 }

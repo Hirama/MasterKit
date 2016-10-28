@@ -35,6 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class FrgGoalsMoney extends FrgGoalsParent {
 
     private GoalsFragment goalsFragment;
+
     public FrgGoalsMoney() {
     }
 
@@ -70,6 +71,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         });
         return v;
     }
+
     protected void setUpItemTouchHelper() {
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -112,7 +114,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
                 if (undoOn) {
                     adapter.pendingRemoval(swipedPosition);
                 } else {
-                    Log.d("FrgGoalsParent","swipedPosition"+swipedPosition);
+                    Log.d("FrgGoalsParent", "swipedPosition" + swipedPosition);
                     new GoalsFrgDialogEdit().show(getActivity().getSupportFragmentManager(),
                             "login");
                     //adapter.remove(swipedPosition);
@@ -166,7 +168,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         setUpAnimationDecoratorHelper();
     }
 
-    public void setMainFragment(GoalsFragment goalsFragment){
+    public void setMainFragment(GoalsFragment goalsFragment) {
         this.goalsFragment = goalsFragment;
     }
 
@@ -194,7 +196,7 @@ public class FrgGoalsMoney extends FrgGoalsParent {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser) {
-          this.goalsFragment.changeIconTabs("money");
+            this.goalsFragment.changeIconTabs("money");
         }
     }
 
@@ -206,5 +208,14 @@ public class FrgGoalsMoney extends FrgGoalsParent {
 
         }
     }
+
+    public void editGoals(String goal) {
+        if (getUserVisibleHint()) {
+            //Логика редактирования
+            ((GoalsFragmAdapter) mRecyclerView.getAdapter()).notifyDataSetChanged();
+            setUpRecyclerView();
+        }
+    }
+
 
 }

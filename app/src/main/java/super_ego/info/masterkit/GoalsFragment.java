@@ -65,7 +65,7 @@ public class GoalsFragment extends Fragment {
         viewPager = (CustomViewPager) v.findViewById(R.id.viewpager);
         viewPager.setPagingEnabled(false);
         setupViewPager(viewPager);
-
+        getActivity().setTitle("Мои Цели");
         tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
