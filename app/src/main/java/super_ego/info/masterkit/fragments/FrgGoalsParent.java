@@ -1,8 +1,12 @@
 package super_ego.info.masterkit.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
@@ -17,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +36,16 @@ import super_ego.info.masterkit.R;
  */
 
 public class FrgGoalsParent extends Fragment {
+
+    private ArrayList countries =  new ArrayList<>();
+   // private DataAdapter adapter;
+    private RecyclerView recyclerView;
+    //private AlertDialog.Builder alertDialog;
+    private EditText et_country;
+    private int edit_position;
+    private View view;
+    private boolean add = false;
+    private Paint p = new Paint();
     ArrayAdapter<String> adapter;
     ListView listGoalsLove;
     List<String> list;

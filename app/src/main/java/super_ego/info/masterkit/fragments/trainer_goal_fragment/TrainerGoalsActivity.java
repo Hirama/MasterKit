@@ -1,18 +1,15 @@
-package super_ego.info.masterkit;
+package super_ego.info.masterkit.fragments.trainer_goal_fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import super_ego.info.masterkit.R;
-import super_ego.info.masterkit.fragments.trainer_goal_fragment.TrainerGoalsMainFragment;
 
 
 public class TrainerGoalsActivity extends AppCompatActivity {
@@ -48,10 +45,6 @@ public class TrainerGoalsActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-//                Intent intent = new Intent(this, MainActivity.class);
-//                intent.putExtra("idFragment",3);
-//                Log.d("TRACE:TrainerGoals", "onRestoreInstanceState2");
-//                startActivity(intent);
                 onBackPressed();
                 return true;
             default:

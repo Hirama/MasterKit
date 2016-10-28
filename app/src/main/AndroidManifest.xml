@@ -32,7 +32,7 @@
             android:value=".MainActivity"
             />
         <activity
-            android:name=".adapter.TrainerGoalsActivity"
+            android:name=".fragments.trainer_goal_fragment.TrainerGoalsActivity"
             android:label="@string/title_activity_trainer_goals"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

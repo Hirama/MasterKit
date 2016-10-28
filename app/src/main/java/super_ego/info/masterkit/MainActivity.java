@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity
     public static DrawerLayout drawer;
     public static Toolbar toolbar;
 
-//    int idFragment=0;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,15 +79,12 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences mPrefs = getSharedPreferences("data", MODE_PRIVATE);
         if (mPrefs.contains("user")) {
             value = mPrefs.getString("user", "");
-            //Log.d("******",value);
             userDataTask = new UserGetData(value);
             Bundle bundle = new Bundle();
             bundle.putString("token", value);
             learningFragment.setArguments(bundle);
             GetGoals getGoals = new GetGoals(value);
             getGoals.execute();
-//            SetGoalToAPI setGoalToAPI= new SetGoalToAPI(value,"Checked","Cheked");
-//            Log.d("***********",setGoalToAPI.sendGoalsToApi());
         }
 
         if (extras != null) {
@@ -102,25 +96,10 @@ public class MainActivity extends AppCompatActivity
             learningFragment.setArguments(bundle);
             GetGoals getGoals = new GetGoals(value);
             getGoals.execute();
-//            SetGoalToAPI setGoalToAPI= new SetGoalToAPI(value,"Checked","Cheked");
-//            Log.d("***********",setGoalToAPI.sendGoalsToApi());
         }
 
     }
-/*
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("idFragment", idFragment);
-        Log.d("TRACE:MAINACTIVITY", "onSaveInstanceState"+idFragment);
-    }
-
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        idFragment = savedInstanceState.getInt("idFragment");
-        Log.d("MAINACTIVITY", "onRestoreInstanceState"+idFragment);
-    }
-*/
-    private void setUserName() {
+void setUserName() {
         try {
             newUser = userDataTask.execute((Void) null).get();
             TextView fnameANDlname = (TextView) findViewById(R.id.user_name);
@@ -179,27 +158,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setMessage("Вы действительно хотите закрыть приложение?")
-//                    .setCancelable(false)
-//                    .setPositiveButton("Да", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            MainActivity.this.finish();
-//                        }
-//                    })
-//                    .setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int id) {
-//                            dialog.cancel();
-//                        }
-//                    });
-//            AlertDialog alert = builder.create();
-//            alert.show();
-//        }
-
         // Otherwise defer to system default behavior.
         super.onBackPressed();
     }
