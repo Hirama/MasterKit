@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:weightSum="2">
 
@@ -13,20 +14,38 @@
         android:text="TextView"
         android:textAlignment="center"
         android:textAllCaps="true" />
+    <TextView
+        android:id="@+id/textViewTopStepSituationFragmentText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="TextView"
+        android:layout_below="@id/textViewTopStepSituationFragment"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:textAllCaps="true" />
+    <ImageButton
+        android:id="@+id/imgBtnPlaySituation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewTopStepSituationFragmentText"
+        android:layout_centerHorizontal="true"
+        android:background="@color/transparent_button"
+        app:srcCompat="@drawable/playbutton"
+        android:layout_marginTop="60dp" />
 
     <EditText
         android:id="@+id/editTextStepSituationAnswer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textViewTopStepSituationFragment"
+        android:layout_below="@id/imgBtnPlaySituation"
         android:ems="10"
         android:hint="Ваш ответ"
         android:inputType="text"
-        android:text="На"
         android:textColor="?android:attr/colorForeground"
         android:maxLines="10"
-        android:minHeight="179dp"
-        android:textAlignment="viewStart"
+        android:minHeight="100dp"
         android:gravity="top|center_vertical" />
 
     <LinearLayout

@@ -50,12 +50,13 @@ public class SituationFragment extends Fragment {
         getActivity().setTitle("Тренажёр");
         TempModel tempModel = new TempModel();
         tempModel.setName("Ситуация");
+        tempModel.setTypeOfTraining("purpose");
         tempModel.setImageId(R.drawable.situation);
         records.add(tempModel);
 
         TempModel tempModel1 = new TempModel();
-
         tempModel1.setName("Качество");
+        tempModel.setTypeOfTraining("quality");
         tempModel1.setImageId(R.drawable.quality);
         records.add(tempModel1);
 
@@ -83,7 +84,7 @@ public class SituationFragment extends Fragment {
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Toast.makeText(getContext(), "WOW SUCH WORK!", Toast.LENGTH_SHORT).show();
                         FragmentManager fragManager = getActivity().getSupportFragmentManager();
-                        StepSituationFragment stepSituationFragment = new StepSituationFragment();
+                        StepSituationFragment stepSituationFragment = new StepSituationFragment("quality");
                         fragManager.beginTransaction()
                                 .replace(R.id.frgmContMain, stepSituationFragment)
 //                                .addToBackStack(null)

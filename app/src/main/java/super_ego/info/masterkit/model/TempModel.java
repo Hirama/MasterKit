@@ -7,6 +7,15 @@ package super_ego.info.masterkit.model;
 public class TempModel {
     String name;
     Integer imageId;
+    String typeOfTraining;
+    public String getTypeOfTraining() {
+        return typeOfTraining;
+    }
+
+    public void setTypeOfTraining(String typeOfTraining) {
+        this.typeOfTraining = typeOfTraining;
+    }
+
 
     public String getName() {
         return name;
