@@ -2,6 +2,7 @@ package super_ego.info.masterkit.fragments.trainer_fragmnets;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class StepSituationFragment extends Fragment {
     private EditText userAnswer;
     private TextView situationDescription;
     ImageButton imageButtonPlayer;
-    private MediaPlayer mediaPlayer;
+   // private MediaPlayer mediaPlayer;
     boolean flag = false;
     private Integer counter=0;
     private boolean intialStage = true;
@@ -91,7 +92,8 @@ public class StepSituationFragment extends Fragment {
         }
 
         imageButtonPlayer.setVisibility(View.INVISIBLE);
-
+//        mediaPlayer = new MediaPlayer();
+//        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         userAnswer=(EditText) rootView.findViewById(R.id.editTextStepSituationAnswer);
         //  String answer=userAnswer.getText().toString();
         nextButton = (Button) rootView.findViewById(R.id.buttonNextSituationFragment);
@@ -103,17 +105,19 @@ public class StepSituationFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                //if(!userAnswer.getText().toString().isEmpty()){
+
+
                 String answer=userAnswer.getText().toString();
+                boolean finishPointCheck=false;
                 if(counter==Integer.valueOf(finalFinishTraining)){
-                    Log.d("******","Training is finished");
+                    finishPointCheck=true;
                 }else {
                     //for(int i=2; i<=Integer.valueOf(finalGetTrainingSituationData.getData().getFinish().get(0));i++) {
                     if (!answer.equals("")) {
                         counter+=1;
                         SetTrainingSituation setTrainingSituation = new SetTrainingSituation(finalToken, typeOfTraining,
                                 String.valueOf(counter), setTrainingSituationData,answer);
-                        userAnswer.setText("");
+                        //userAnswer.setText("");
                         try {
                             setTrainingSituationData = setTrainingSituation.execute().get();
                             JSONObject data = setTrainingSituationData.getJSONObject("data");
@@ -129,8 +133,14 @@ public class StepSituationFragment extends Fragment {
                             }else{
                                 userAnswer.setVisibility(View.VISIBLE);
                             }
-                            imageButtonPlayer = (ImageButton) rootView.findViewById(R.id.imgBtnPlaySituation);
+
+                            if(finishPointCheck){
+
+                                //Put image of finish here
+                            }
                             if (data.get("mp3").getClass().equals(String.class)) {
+                                final MediaPlayer mediaPlayer = new MediaPlayer();
+                                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                                 imageButtonPlayer.setVisibility(View.VISIBLE);
                                 final String audioTraining = data.getString("mp3");
                                 //Log.d("********",finalSetTrainingSituationData.getData().getMp3());
@@ -147,7 +157,7 @@ public class StepSituationFragment extends Fragment {
                                                                                  imageButtonPlayer.setImageResource(R.drawable.pausebutton);
                                                                                  Log.d("*********", audioTraining);
                                                                                  if (intialStage)
-                                                                                     new Player()
+                                                                                     new Player(mediaPlayer)
                                                                                              .execute("https://super-ego.info" + audioTraining);
 
                                                                                  else {
@@ -181,8 +191,10 @@ public class StepSituationFragment extends Fragment {
         return rootView;
     }
     class Player extends AsyncTask<String, Void, Boolean> {
-
-
+        private MediaPlayer mediaPlayer;
+        public Player(MediaPlayer mediaPlayer){
+            this.mediaPlayer=mediaPlayer;
+        }
         @Override
         protected Boolean doInBackground(String... params) {
             // TODO Auto-generated method stub
@@ -239,16 +251,16 @@ public class StepSituationFragment extends Fragment {
 
 
     }
-    @Override
-    public void onPause() {
-        // TODO Auto-generated method stub
-        super.onPause();
-        if (mediaPlayer != null) {
-            mediaPlayer.reset();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-    }
+//    @Override
+//    public void onPause() {
+//        // TODO Auto-generated method stub
+//        super.onPause();
+//        if (mediaPlayer != null) {
+//            mediaPlayer.reset();
+//            mediaPlayer.release();
+//            mediaPlayer = null;
+//        }
+//    }
     public class GetTrainingSituation extends AsyncTask<Void, Void, JSONObject> {
 
         private final String value;
