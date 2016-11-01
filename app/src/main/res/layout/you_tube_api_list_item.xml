@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/learningStedWithVideo">
+
+    <TextView
+        android:text="Шаг 1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewVideoStep"
+        android:layout_marginLeft="16dp" />
+
+    <FrameLayout
+        android:id="@+id/youtube_layout_learning_step_video"
+        android:layout_height="200dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:accessibilityLiveRegion="polite"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/textViewVideoStep"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@mipmap/small_video" />
+
+    <TextView
+        android:text="Как поставить цели"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewNameofStep"
+        android:layout_marginTop="8dp"
+        android:textAllCaps="true"
+        android:layout_below="@id/youtube_layout_learning_step_video"
+        android:layout_marginLeft="16dp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:text="Какой то вопрос?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewNameofStep"
+        android:id="@+id/textViewQuestionFromVideo"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Some answer"
+        android:ems="10"
+        android:id="@+id/editTextAnswerVideo"
+        android:layout_below="@id/textViewQuestionFromVideo"
+        android:hint="Ваш ответ"
+        android:textColor="?android:attr/colorForeground"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp" />
+
+</RelativeLayout>

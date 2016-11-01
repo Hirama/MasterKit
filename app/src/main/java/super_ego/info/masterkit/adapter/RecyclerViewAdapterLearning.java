@@ -38,9 +38,6 @@ public class RecyclerViewAdapterLearning extends RecyclerView.Adapter<RecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.learning_list_item, viewGroup, false);
-        if (records.get(i).getStatus().equals("locked")){
-            viewGroup.setActivated(true);
-        }
         return new ViewHolder(v);
     }
 
